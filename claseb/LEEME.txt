@@ -1,0 +1,44 @@
+ESTUDIO CLASE B — App de estudio para el examen Nexteo (Chile)
+================================================================
+
+Esta es una app web instalable (PWA). Funciona en el navegador y se puede
+instalar en Android e iOS como una app, a pantalla completa y sin conexión.
+
+CONTENIDO DE LA CARPETA
+-----------------------
+- index.html               -> la app (ábrela para usarla en el navegador)
+- manifest.webmanifest      -> datos de la app (nombre, ícono, colores)
+- sw.js                    -> hace que funcione sin internet
+- icon-192.png / 512 / 180  -> íconos de la app
+
+IMPORTANTE: deja todos los archivos JUNTOS en la misma carpeta.
+
+
+OPCIÓN A — Solo verla / usarla (rápido)
+---------------------------------------
+Abre "index.html" en tu navegador (Chrome, Edge, Safari).
+Funciona completa, pero para instalarla como app en Android usa la Opción B.
+
+
+OPCIÓN B — Instalarla como app en el teléfono (recomendado)
+-----------------------------------------------------------
+Necesitas ponerla online una vez. Es gratis y toma 2 minutos:
+
+  1) Entra a  https://app.netlify.com/drop
+  2) Arrastra TODA la carpeta (con los 5 archivos) a la página.
+  3) Te dará un link tipo  https://algo-random.netlify.app
+  4) Abre ese link EN TU TELÉFONO.
+
+  En ANDROID (Chrome):
+     - Aparecerá un aviso "Instalar app", o entra al menú (⋮) > "Instalar app"
+       / "Agregar a la pantalla principal".
+
+  En iPHONE (Safari):
+     - Toca el botón Compartir (cuadrito con flecha ↑) > "Agregar a inicio".
+
+Listo: te queda el ícono del semáforo en tu teléfono y se abre como una app.
+
+
+Otras formas de hostear gratis: GitHub Pages, Vercel, Cloudflare Pages.
+
+Material de estudio basado en apuntes y en el libro CONASET. No es oficial.

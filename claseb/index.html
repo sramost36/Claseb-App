@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>Clase B — Estudio Examen Nexteo</title>
+<meta name="theme-color" content="#16447E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Clase B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800&family=Barlow+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EAEEF3; --surface:#FFFFFF; --ink:#161A20; --muted:#5B6573;
+    --brand:#16447E; --brand-dk:#0F2E57; --accent:#F4C20D;
+    --green:#15A34A; --amber:#E8920C; --red:#D63B3B;
+    --border:#DCE2EA; --shadow:0 6px 22px rgba(15,46,87,.10);
+    --disp:"Barlow Semi Condensed","Barlow","Helvetica Neue",Arial,sans-serif;
+    --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    --topH:52px; --navH:66px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  html{background:#0E2742}
+  body{
+    background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.45;
+    display:flex;flex-direction:column;height:100dvh;overflow:hidden;
+    overscroll-behavior:none;-webkit-user-select:none;user-select:none;
+    max-width:480px;margin:0 auto;box-shadow:0 0 50px rgba(0,0,0,.35);
+  }
+
+  /* Top brand bar */
+  .topbar{flex:0 0 auto;height:calc(var(--topH) + env(safe-area-inset-top));
+    padding-top:env(safe-area-inset-top);background:var(--brand);color:#fff;
+    display:flex;align-items:center;gap:10px;padding-left:16px;padding-right:14px;
+    box-shadow:0 2px 8px rgba(15,46,87,.20);z-index:20}
+  .dots{display:flex;gap:4px}
+  .dots span{width:11px;height:11px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+  .dots .r{background:var(--red)} .dots .y{background:var(--accent)} .dots .g{background:var(--green)}
+  .topbar .nm{font-family:var(--disp);font-weight:700;font-size:18px;letter-spacing:.4px;flex:1}
+  .mini{font-size:12.5px;font-weight:700;background:rgba(255,255,255,.16);padding:4px 10px;border-radius:99px;
+    font-variant-numeric:tabular-nums}
+
+  /* Scroll area */
+  main{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+    padding:16px 16px calc(var(--navH) + 18px)}
+  .screen{display:none;animation:fade .22s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+  h2.sh{font-family:var(--disp);font-weight:700;font-size:23px;margin:2px 0 14px;letter-spacing:.2px}
+  .sub{font-size:13px;color:var(--muted);font-weight:600;margin:-8px 0 14px}
+
+  /* Bottom nav */
+  nav.tabbar{flex:0 0 auto;height:calc(var(--navH) + env(safe-area-inset-bottom));
+    padding-bottom:env(safe-area-inset-bottom);background:var(--surface);border-top:1px solid var(--border);
+    display:flex;z-index:20;box-shadow:0 -2px 14px rgba(15,46,87,.06)}
+  nav.tabbar button{flex:1;border:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:3px;color:var(--muted);font-family:var(--body);
+    font-weight:700;font-size:11px;padding:6px 2px;transition:color .15s}
+  nav.tabbar button .ic{font-size:21px;line-height:1}
+  nav.tabbar button.on{color:var(--brand)}
+  nav.tabbar button.on .ic{transform:translateY(-1px)}
+
+  /* Cards / panels */
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:18px}
+  .panel + .panel{margin-top:12px}
+
+  /* HOME */
+  .hero{background:linear-gradient(135deg,var(--brand),var(--brand-dk));color:#fff;border:0;border-radius:18px;
+    padding:20px;box-shadow:var(--shadow);display:flex;align-items:center;gap:18px}
+  .ring{--p:0;width:78px;height:78px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;
+    background:conic-gradient(var(--accent) calc(var(--p)*1%), rgba(255,255,255,.22) 0)}
+  .ring i{width:60px;height:60px;border-radius:50%;background:var(--brand-dk);display:grid;place-items:center;
+    font-family:var(--disp);font-weight:700;font-size:20px;font-style:normal;font-variant-numeric:tabular-nums}
+  .hero .ht{font-family:var(--disp);font-weight:700;font-size:21px;line-height:1.1}
+  .hero .hs{font-size:13.5px;opacity:.85;margin-top:4px;font-weight:600}
+  .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:13px 8px;text-align:center;box-shadow:var(--shadow)}
+  .stat .v{font-family:var(--disp);font-weight:700;font-size:24px;line-height:1;font-variant-numeric:tabular-nums}
+  .stat .l{font-size:11px;color:var(--muted);font-weight:700;margin-top:5px;text-transform:uppercase;letter-spacing:.4px}
+  .bigbtn{display:flex;align-items:center;gap:13px;width:100%;border:0;cursor:pointer;text-align:left;
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-top:12px;
+    box-shadow:var(--shadow);font-family:var(--body);transition:transform .12s}
+  .bigbtn:active{transform:scale(.985)}
+  .bigbtn .em{font-size:26px}
+  .bigbtn .tt{flex:1}
+  .bigbtn .tt b{display:block;font-family:var(--disp);font-weight:700;font-size:18px}
+  .bigbtn .tt span{font-size:13px;color:var(--muted);font-weight:600}
+  .bigbtn .ar{color:var(--brand);font-size:20px;font-weight:800}
+
+  .install{display:none;margin-top:12px;background:#FFF8E1;border:1px solid #F1DE9A;border-radius:14px;
+    padding:13px 15px;font-size:13.5px;color:#6b5a16;font-weight:600;line-height:1.45}
+  .install b{color:#5a4a10}
+  .install button{margin-top:9px;border:0;background:var(--brand);color:#fff;font-family:var(--body);
+    font-weight:800;font-size:14px;padding:10px 18px;border-radius:10px;cursor:pointer}
+  .install .ios{margin-top:6px}
+
+  /* Difficulty chips */
+  .chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .chip{border:1.5px solid var(--border);background:var(--surface);font-family:var(--body);font-weight:700;
+    font-size:13.5px;color:var(--muted);padding:8px 14px;border-radius:99px;cursor:pointer;transition:.13s}
+  .chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .chip.d1.on{background:var(--green);border-color:var(--green)}
+  .chip.d2.on{background:var(--amber);border-color:var(--amber)}
+  .chip.d3.on{background:var(--red);border-color:var(--red)}
+
+  /* Category list */
+  .cat{display:flex;align-items:center;gap:13px;width:100%;border:1px solid var(--border);background:var(--surface);
+    border-radius:14px;padding:13px 15px;margin-bottom:10px;cursor:pointer;box-shadow:var(--shadow);
+    font-family:var(--body);text-align:left;transition:transform .12s}
+  .cat:active{transform:scale(.99)}
+  .cat .cic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:21px;flex-shrink:0;color:#fff}
+  .cat .cmid{flex:1;min-width:0}
+  .cat .cnm{font-weight:700;font-size:15.5px;font-family:var(--disp);line-height:1.15}
+  .cat .cpb{height:6px;background:var(--bg);border-radius:99px;overflow:hidden;margin-top:7px}
+  .cat .cpb i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .4s}
+  .cat .ccount{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  /* Study card view */
+  .backrow{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .back{border:1px solid var(--border);background:var(--surface);border-radius:10px;width:40px;height:40px;
+    font-size:18px;cursor:pointer;display:grid;place-items:center;flex-shrink:0;color:var(--brand);font-weight:800}
+  .backrow .bt{font-family:var(--disp);font-weight:700;font-size:18px;flex:1;line-height:1.05}
+  .backrow .bt small{display:block;font-family:var(--body);font-weight:700;font-size:12px;color:var(--muted)}
+
+  .flash{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);
+    min-height:260px;display:flex;flex-direction:column;cursor:pointer;position:relative;overflow:hidden;
+    touch-action:pan-y;transition:transform .1s}
+  .flash:active{transform:scale(.992)}
+  .ftop{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 0}
+  .pill{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:4px 10px;border-radius:99px;color:#fff}
+  .pill.d1{background:var(--green)} .pill.d2{background:var(--amber)} .pill.d3{background:var(--red)}
+  .boxtag{font-size:11px;font-weight:800;color:var(--muted);background:var(--bg);border:1px solid var(--border);
+    padding:3px 9px;border-radius:99px}
+  .srt{font-size:12.5px;font-weight:800;min-height:16px}
+  .fcat{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:5px 11px;
+    border-radius:99px;color:#fff;align-self:flex-start;margin:10px 16px 0}
+  .fface{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:12px 22px}
+  .fq{font-family:var(--disp);font-weight:700;font-size:23px;line-height:1.22}
+  .fa{font-size:18px;line-height:1.4;font-weight:500}
+  .falab{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+  .fhint{text-align:center;font-size:12px;color:var(--muted);font-weight:600;padding:0 0 14px}
+
+  .navrow{display:flex;gap:9px;margin-top:12px}
+  .nbtn{flex:1;border:1px solid var(--border);background:var(--surface);font-family:var(--body);font-weight:700;
+    font-size:14px;color:var(--ink);padding:13px 6px;border-radius:12px;cursor:pointer;display:flex;
+    align-items:center;justify-content:center;gap:7px;transition:transform .12s}
+  .nbtn:active{transform:scale(.97)}
+  .nbtn.audio.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+  .rate{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:11px;transition:opacity .15s}
+  .rate.hide{opacity:0;pointer-events:none}
+  .rbtn{border:0;color:#fff;font-family:var(--body);font-weight:800;font-size:13px;padding:14px 6px;border-radius:13px;
+    cursor:pointer;line-height:1.15;transition:transform .12s}
+  .rbtn:active{transform:scale(.96)}
+  .rbtn small{display:block;font-size:10px;font-weight:700;opacity:.92;margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
+  .rbtn.no{background:var(--red)} .rbtn.mid{background:var(--amber)} .rbtn.yes{background:var(--green)}
+
+  /* Exam */
+  .seg{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+  .lbl{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:6px 0 8px}
+  .qprog{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;
+    font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+  .qprog .pbar{flex:1;margin:0 12px;height:7px;background:var(--bg);border-radius:99px;overflow:hidden}
+  .qprog .pbar i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .3s}
+  .question{font-family:var(--disp);font-weight:700;font-size:20px;line-height:1.28;margin-bottom:15px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{border:1.5px solid var(--border);background:var(--surface);text-align:left;font-family:var(--body);
+    font-size:15.5px;font-weight:600;color:var(--ink);padding:14px 15px;border-radius:12px;cursor:pointer;
+    display:flex;gap:11px;align-items:flex-start;transition:transform .1s}
+  .opt:active{transform:scale(.99)}
+  .opt .lt{font-weight:800;color:var(--brand);flex-shrink:0}
+  .opt.correct{border-color:var(--green);background:#EDF8F1}.opt.correct .lt{color:var(--green)}
+  .opt.wrong{border-color:var(--red);background:#FBEDED}.opt.wrong .lt{color:var(--red)}
+  .opt.tried{opacity:.5;pointer-events:none}
+  .opt.elim{opacity:.4;text-decoration:line-through;pointer-events:none}
+  .spk{border:1px solid var(--border);background:var(--bg);border-radius:9px;width:36px;height:36px;display:grid;place-items:center;font-size:16px;cursor:pointer;color:var(--brand);flex-shrink:0}
+  .spk:active{transform:scale(.94)}
+  .opt.lock{cursor:default}
+  .btn{border:0;background:var(--brand);color:#fff;font-family:var(--body);font-weight:800;font-size:16px;
+    letter-spacing:.3px;padding:15px 26px;border-radius:13px;cursor:pointer;transition:transform .12s}
+  .btn:active{transform:scale(.97)} .btn.full{width:100%}
+  .btn.au{background:var(--surface);color:var(--brand);border:1.5px solid var(--brand);font-size:14px;padding:11px 16px}
+
+  .score{font-family:var(--disp);font-weight:800;font-size:58px;line-height:1;text-align:center}
+  .score small{font-size:24px;color:var(--muted)}
+  .verdict{font-weight:800;font-size:18px;text-align:center;margin:4px 0}
+  .rmsg{text-align:center;color:var(--muted);font-size:14px;margin:0 0 16px}
+  .ritem{border-top:1px solid var(--border);padding:12px 0}
+  .ritem .rq{font-weight:700;font-size:14.5px;margin-bottom:4px}
+  .ritem .ra{font-size:13.5px;color:var(--muted)}.ritem .ra b{color:var(--green)}
+
+  /* History */
+  .hrow{border:1px solid var(--border);background:var(--surface);border-radius:13px;box-shadow:var(--shadow);
+    margin-bottom:10px;overflow:hidden}
+  .hhead{display:flex;align-items:center;gap:12px;padding:13px 15px;cursor:pointer}
+  .hbadge{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:var(--disp);
+    font-weight:800;font-size:17px;color:#fff;flex-shrink:0;line-height:1}
+  .hbadge small{font-size:10px;font-weight:700}
+  .hmid{flex:1;min-width:0}
+  .hmid .hd{font-weight:700;font-size:14.5px}
+  .hmid .hm{font-size:12px;color:var(--muted);font-weight:600}
+  .hchev{color:var(--muted);font-size:14px;transition:transform .2s}
+  .hrow.open .hchev{transform:rotate(90deg)}
+  .hbody{display:none;padding:0 15px 12px;border-top:1px solid var(--border)}
+  .hrow.open .hbody{display:block}
+
+  /* Apuntes */
+  .truco{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--accent);
+    border-radius:13px;box-shadow:var(--shadow);padding:15px 16px;margin-bottom:11px}
+  .truco h3{font-family:var(--disp);font-weight:700;font-size:17.5px;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+  .truco .rd{margin-left:auto;border:1px solid var(--border);background:var(--bg);border-radius:9px;width:34px;height:34px;
+    display:grid;place-items:center;font-size:15px;cursor:pointer;color:var(--brand)}
+  .truco p{margin:0;font-size:15px;line-height:1.5;font-weight:500}
+  .truco code{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1px 7px;
+    font-family:var(--body);font-weight:700;font-size:14px;white-space:nowrap}
+
+  .link{background:transparent;border:0;color:var(--red);font-family:var(--body);font-weight:700;font-size:13px;
+    cursor:pointer;text-decoration:underline;padding:8px 0}
+  .empty{text-align:center;color:var(--muted);font-size:14px;padding:26px 10px;font-weight:600}
+  .foot{font-size:11.5px;color:var(--muted);line-height:1.5;text-align:center;margin-top:18px;padding:0 4px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></span>
+  <span class="nm">Estudio Clase B</span>
+  <span class="mini" id="topMastery">0%</span>
+</header>
+
+<main>
+  <!-- ===== INICIO ===== -->
+  <section class="screen on" id="s-home">
+    <div class="hero">
+      <div class="ring" id="ring"><i id="ringTxt">0%</i></div>
+      <div>
+        <div class="ht">¡A por la licencia!</div>
+        <div class="hs" id="homeDom">0 de 0 tarjetas dominadas</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v" id="stStreak">0</div><div class="l">🔥 Racha</div></div>
+      <div class="stat"><div class="v" id="stExams">0</div><div class="l">📝 Exámenes</div></div>
+      <div class="stat"><div class="v" id="stBest">—</div><div class="l">🏆 Mejor</div></div>
+    </div>
+    <button class="bigbtn" onclick="quickExam()">
+      <span class="em">⚡</span>
+      <span class="tt"><b>Examen rápido</b><span>20 preguntas al azar, nivel mixto</span></span>
+      <span class="ar">→</span>
+    </button>
+    <button class="bigbtn" onclick="go('study')">
+      <span class="em">📚</span>
+      <span class="tt"><b>Estudiar por categoría</b><span>Tarjetas con audio y dificultad</span></span>
+      <span class="ar">→</span>
+    </button>
+    <button class="bigbtn" onclick="go('notes')">
+      <span class="em">📒</span>
+      <span class="tt"><b>Apuntes y trucos</b><span>Lo más memorizable, resumido</span></span>
+      <span class="ar">→</span>
+    </button>
+
+    <div class="install" id="installCard">
+      <b>📲 Instala la app en tu teléfono</b><br>
+      <span id="installTxt">Tenla como app, a pantalla completa y sin barra del navegador.</span>
+      <div id="installAndroid"><button onclick="doInstall()">Instalar app</button></div>
+      <div class="ios" id="installIos" style="display:none">
+        En iPhone: toca <b>Compartir</b> (el cuadrito con la flecha ↑) y luego <b>“Agregar a inicio”</b>.
+      </div>
+    </div>
+
+    <div class="foot">
+      Contenido basado en tus apuntes y el libro CONASET “La persona en el tránsito”. Algunas cifras
+      varían según edición; ante la duda, confirma con el libro oficial. Material de estudio, no oficial.
+    </div>
+  </section>
+
+  <!-- ===== ESTUDIAR ===== -->
+  <section class="screen" id="s-study">
+    <!-- lista -->
+    <div id="studyList">
+      <h2 class="sh">Estudiar</h2>
+      <div class="sub">Elige dificultad y categoría · toca para repasar con tarjetas</div>
+      <div class="chips" id="studyChips"></div>
+      <button class="cat" onclick="openStudy('all')" style="border-color:var(--brand)">
+        <span class="cic" style="background:var(--brand)">🎯</span>
+        <span class="cmid"><span class="cnm">Todas las categorías</span>
+          <span class="cpb"><i id="allBar"></i></span></span>
+        <span class="ccount" id="allCount"></span>
+      </button>
+      <div id="catList"></div>
+    </div>
+    <!-- tarjetas -->
+    <div id="studyCard" style="display:none">
+      <div class="backrow">
+        <button class="back" onclick="closeStudy()">‹</button>
+        <div class="bt" id="studyTitle">Tarjetas<small id="studySubt"></small></div>
+      </div>
+      <div class="chips" id="studyChips2"></div>
+      <div class="panel" id="studyPanel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px">
+          <span class="fcat" id="fcat" style="margin:0"></span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="spk" id="readBtn" onclick="readAloud(event)" title="Escuchar pregunta y opciones">🔈</button>
+            <span class="boxtag" id="boxtag"></span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px">
+          <span class="pill" id="pill"></span>
+          <span class="srt" id="studyResultTag"></span>
+        </div>
+        <div class="question" id="studyQ"></div>
+        <div class="opts" id="studyOpts"></div>
+      </div>
+      <button class="nbtn" id="hintBtn" style="display:none;width:100%;margin-top:11px" onclick="useHint()">💡 Pista — descartar una incorrecta</button>
+      <button class="nbtn audio" id="audioBtn" onclick="toggleAudio(event)" style="width:100%;margin-top:11px">🔊 Modo audio (automático)</button>
+      <div class="navrow" style="margin-top:11px">
+        <button class="nbtn" id="revealBtn" style="display:none" onclick="revealAnswer()">👁 Ver respuesta</button>
+        <button class="btn" id="studyNext" style="flex:1" onclick="nextStudy()">Saltar →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXAMEN ===== -->
+  <section class="screen" id="s-exam">
+    <div id="examConfig">
+      <h2 class="sh">Examen</h2>
+      <div class="sub">Preguntas al azar tipo Nexteo (A/B/C). Se guarda tu historial.</div>
+      <div class="panel">
+        <div class="lbl">Dificultad</div>
+        <div class="seg" id="examDiffChips"></div>
+        <div class="lbl" style="margin-top:14px">N.º de preguntas</div>
+        <div class="seg" id="examLenChips"></div>
+        <button class="btn full" style="margin-top:18px" onclick="startExam()">Comenzar examen</button>
+      </div>
+      <h2 class="sh" style="margin-top:22px;font-size:19px">Historial</h2>
+      <div id="historyList"></div>
+    </div>
+
+    <div id="examRun" style="display:none">
+      <div class="qprog"><span id="qNum"></span><div class="pbar"><i id="qBar"></i></div><span id="qScore"></span></div>
+      <div class="panel">
+        <div class="question" id="examQ"></div>
+        <div class="opts" id="examOpts"></div>
+      </div>
+      <div class="navrow" style="margin-top:12px">
+        <button class="nbtn" onclick="readExam(event)">🔈 Escuchar</button>
+        <button class="nbtn" id="examHintBtn" onclick="useExamHint()">💡 Pista</button>
+      </div>
+      <button class="btn full" id="nextBtn" style="display:none;margin-top:12px" onclick="nextExam()">Siguiente</button>
+    </div>
+
+    <div id="examResult" style="display:none">
+      <div class="panel">
+        <div class="score"><span id="resScore"></span><small id="resTotal"></small></div>
+        <div class="verdict" id="resVerdict"></div>
+        <p class="rmsg" id="resMsg"></p>
+        <button class="btn full" onclick="go('exam')">Volver al inicio del examen</button>
+      </div>
+      <div class="panel" id="resReviewPanel" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- ===== APUNTES ===== -->
+  <section class="screen" id="s-notes">
+    <h2 class="sh">Apuntes y trucos</h2>
+    <div class="sub">Las reglas más memorizables. Toca 🔈 para escucharlas.</div>
+    <div id="trucoList"></div>
+  </section>
+</main>
+
+<nav class="tabbar">
+  <button data-s="home" class="on" onclick="go('home')"><span class="ic">🏠</span>Inicio</button>
+  <button data-s="study" onclick="go('study')"><span class="ic">📚</span>Estudiar</button>
+  <button data-s="exam" onclick="go('exam')"><span class="ic">📝</span>Examen</button>
+  <button data-s="notes" onclick="go('notes')"><span class="ic">📒</span>Apuntes</button>
+</nav>
+
+<script>
+/* ===================== DATOS ===================== */
+/* d: 1=Fácil  2=Medio  3=Difícil */
+const CATS = {
+  dist:{n:"Distancias y velocidad",c:"#2563EB",i:"📐"},
+  stat:{n:"Estadísticas y datos",c:"#7C3AED",i:"📊"},
+  alc :{n:"Alcohol y drogas",c:"#DC2626",i:"🍷"},
+  med :{n:"Medicamentos",c:"#DB2777",i:"💊"},
+  veh :{n:"Sistemas del vehículo",c:"#0891B2",i:"🚗"},
+  seg :{n:"Seguridad activa y pasiva",c:"#16A34A",i:"🦺"},
+  vis :{n:"Percepción y visión",c:"#CA8A04",i:"👁️"},
+  vul :{n:"Vulnerables y sillas (SRI)",c:"#EA580C",i:"🚸"},
+  sen :{n:"Señales y semáforos",c:"#0D9488",i:"🚦"},
+  norm:{n:"Normas y reglas",c:"#475569",i:"📋"},
+  ofi:{n:"Cuestionario oficial",c:"#3949AB",i:"📑"}
+};
+const DIFF = {1:{n:"Fácil",c:"var(--green)"},2:{n:"Medio",c:"var(--amber)"},3:{n:"Difícil",c:"var(--red)"}};
+
+const CARDS = [
+  {c:"dist",d:1,q:`¿Cómo se calcula la distancia de REACCIÓN?`,a:`Primer dígito de la velocidad × 3. Ej: 80 km/h → 8×3 = 24 m.`},
+  {c:"dist",d:1,q:`¿Cómo se calcula la distancia de FRENADO?`,a:`Primer dígito de la velocidad × 5. Ej: 80 km/h → 8×5 = 40 m.`},
+  {c:"dist",d:1,q:`¿Cómo se calcula la distancia TOTAL de detención?`,a:`Reacción + Frenado. Ej: 80 km/h → 24 + 40 = 64 m.`},
+  {c:"dist",d:2,q:`A 90 km/h: ¿reacción, frenado y total?`,a:`Reacción 27 m, Frenado 45 m, Total 72 m.`},
+  {c:"dist",d:2,q:`A 60 km/h: ¿reacción, frenado y total?`,a:`Reacción 18 m, Frenado 30 m, Total 48 m.`},
+  {c:"dist",d:2,q:`Si DUPLICAS la velocidad, ¿qué pasa con reacción y frenado?`,a:`La reacción se multiplica ×2 y el frenado ×4.`},
+  {c:"dist",d:3,q:`Si TRIPLICAS la velocidad, ¿qué pasa con el frenado?`,a:`El frenado se multiplica ×9.`},
+  {c:"dist",d:3,q:`Si QUINTUPLICAS la velocidad, ¿qué pasa con el frenado?`,a:`El frenado se multiplica ×25.`},
+  {c:"dist",d:2,q:`Con ceguera temporal (deslumbramiento), ¿cuál es la distancia de visibilidad?`,a:`0 metros.`},
+
+  {c:"stat",d:2,q:`¿Cuántos siniestros ocurren al año en Chile?`,a:`Más de 82.000 (en algunas cifras ~86.000).`},
+  {c:"stat",d:2,q:`¿Cuántas personas fallecen al año en siniestros?`,a:`Aproximadamente 1.600.`},
+  {c:"stat",d:1,q:`¿Cuántas personas mueren diariamente en las vías?`,a:`Entre 4 y 5 personas.`},
+  {c:"stat",d:3,q:`¿Cuántos peatones mueren atropellados al año en promedio?`,a:`450 peatones.`},
+  {c:"stat",d:2,q:`¿Qué % de los siniestros ocurre en zonas urbanas?`,a:`80%, pero la mayoría de las muertes son en carreteras y autopistas.`},
+  {c:"stat",d:1,q:`¿En qué % de los siniestros está presente la falla humana?`,a:`En más del 90%.`},
+  {c:"stat",d:3,q:`¿Cuánto aumenta la probabilidad de morir atropellado al pasar de 30 a 50 km/h?`,a:`Aumenta 8 veces.`},
+  {c:"stat",d:2,q:`Impacto a 30 km/h: ¿probabilidad de sobrevivir?`,a:`90% de sobrevivir.`},
+  {c:"stat",d:2,q:`Impacto a 45 km/h o más: ¿probabilidad de sobrevivir?`,a:`Menos del 50%.`},
+  {c:"stat",d:3,q:`¿Qué % de los conductores fallecidos tiene entre 18 y 29 años?`,a:`El 29%.`},
+  {c:"stat",d:2,q:`¿Qué % de las personas fallecidas en siniestros son hombres?`,a:`El 79%.`},
+  {c:"stat",d:1,q:`¿Cuáles son los factores principales de los siniestros?`,a:`Imprudencia del conductor, consumo de alcohol y desobedecer señales de tránsito.`},
+  {c:"stat",d:2,q:`¿Cuándo ocurren más siniestros?`,a:`Fines de semana, en la noche, madrugada o con poco tráfico.`},
+  {c:"stat",d:2,q:`¿Qué tipo de accidente origina la mayor cantidad de muertos?`,a:`Los atropellos.`},
+  {c:"stat",d:3,q:`¿Qué % del PIB de Chile representan los costos de los accidentes?`,a:`El 2% del PIB.`},
+  {c:"stat",d:3,q:`¿Cuántos niños y adolescentes fallecieron en la última década?`,a:`760.`},
+
+  {c:"alc",d:1,q:`¿En cuánto tiempo se detecta el alcohol en la sangre tras ingerirlo?`,a:`A los 5 minutos.`},
+  {c:"alc",d:1,q:`¿Cuándo alcanza el alcohol su nivel máximo en la sangre?`,a:`1 hora después de haber tomado.`},
+  {c:"alc",d:1,q:`¿Cuál es la tasa segura de alcohol para conducir?`,a:`0,0 g/L.`},
+  {c:"alc",d:2,q:`Con alcoholemia entre 0,3 y 0,5 g/L, ¿cuánto aumenta el riesgo?`,a:`El doble que si no hubiera bebido.`},
+  {c:"alc",d:2,q:`Con alcoholemia entre 0,5 y 0,8 g/L, ¿cuánto aumenta el riesgo?`,a:`Cinco veces más.`},
+  {c:"alc",d:3,q:`¿A qué velocidad metaboliza el cuerpo el alcohol?`,a:`0,1 a 0,15 g/L por hora. No existen remedios caseros.`},
+  {c:"alc",d:1,q:`¿En qué unidad se mide la prueba de alcoholemia?`,a:`En gramos por litro de sangre (g/L).`},
+  {c:"alc",d:3,q:`¿Desde qué nivel de alcohol aumenta la autoconfianza y se subestima el riesgo?`,a:`Desde 0,1 g/L.`},
+  {c:"alc",d:2,q:`¿Qué rango de alcoholemia es "bajo la influencia del alcohol"?`,a:`De 0,31 a 0,79 g/L.`},
+  {c:"alc",d:2,q:`¿Desde qué nivel se considera "estado de ebriedad"?`,a:`Desde 0,8 g/L.`},
+  {c:"alc",d:2,q:`¿En qué año se promulgó la Ley de Tolerancia Cero?`,a:`En 2012.`},
+  {c:"alc",d:2,q:`¿Qué establece la Ley Emilia (2014)?`,a:`Cárcel efectiva de mínimo 1 año por conducir ebrio causando lesiones graves o muerte.`},
+  {c:"alc",d:2,q:`¿Quién alcanza mayor alcoholemia con la misma cantidad de alcohol?`,a:`Las mujeres (más que los hombres).`},
+  {c:"alc",d:2,q:`¿Cómo afecta comer antes de beber a la alcoholemia?`,a:`Reduce la absorción del alcohol. Las bebidas carbonatadas la aumentan.`},
+  {c:"alc",d:2,q:`¿Cómo influye el peso corporal en la alcoholemia?`,a:`A menor peso corporal, mayor nivel de alcohol en sangre.`},
+  {c:"alc",d:2,q:`¿Quiénes perciben con mayor intensidad los efectos del alcohol?`,a:`Los menores de 18 y los mayores de 65 años.`},
+  {c:"alc",d:2,q:`¿Cómo afecta la MARIHUANA a la conducción?`,a:`Afecta la percepción del tiempo y la velocidad, causa somnolencia y aumenta la distancia de reacción.`},
+  {c:"alc",d:2,q:`¿Cómo afecta la COCAÍNA a la conducción?`,a:`Genera agresividad, impulsividad y sobreestimación de las habilidades.`},
+  {c:"alc",d:3,q:`¿Cómo afecta el ÉXTASIS a la conducción?`,a:`Visión borrosa, sensibilidad a la luz y fatiga extrema.`},
+
+  {c:"med",d:3,q:`Conducir bajo antihistamínicos con somnolencia equivale a manejar con…`,a:`0,5 - 0,8 g/L de alcohol en sangre.`},
+  {c:"med",d:1,q:`¿Se pueden mezclar los antihistamínicos con alcohol u otros medicamentos?`,a:`No, nunca.`},
+  {c:"med",d:2,q:`¿Cómo afectan los ansiolíticos, sedantes e hipnóticos?`,a:`Reducen la vigilia, provocan sueño y afectan la coordinación.`},
+  {c:"med",d:3,q:`¿Cómo afectan los psicoestimulantes (anfetaminas)?`,a:`Dan falsa confianza y alteran la percepción del peligro.`},
+
+  {c:"veh",d:1,q:`¿Cuál es la profundidad mínima LEGAL de la banda de rodadura en Chile?`,a:`1,6 mm.`},
+  {c:"veh",d:2,q:`¿Cuál es la profundidad mínima RECOMENDADA de la banda de rodadura?`,a:`3 mm.`},
+  {c:"veh",d:2,q:`¿Qué provoca una presión de aire BAJA en los neumáticos?`,a:`Desgaste en los costados, pérdida de adherencia y dirección pesada.`},
+  {c:"veh",d:2,q:`¿Qué provoca una presión de aire ALTA?`,a:`Desgaste en el centro, menor contacto con el suelo y mayor riesgo de deslizamiento.`},
+  {c:"veh",d:2,q:`¿Cuándo se debe revisar la presión de los neumáticos?`,a:`Con los neumáticos fríos.`},
+  {c:"veh",d:2,q:`¿Cada cuánto se recomienda cambiar los neumáticos?`,a:`Cada 5 años, aunque parezcan en buen estado.`},
+  {c:"veh",d:2,q:`¿Qué elemento del vehículo requiere mayor revisión?`,a:`Los neumáticos: único punto de contacto con la calzada.`},
+  {c:"veh",d:2,q:`¿Cómo funciona el freno de servicio (pedal)?`,a:`Generalmente hidráulico, actúa en las 4 ruedas.`},
+  {c:"veh",d:1,q:`¿Cómo funciona el freno de estacionamiento (de mano)?`,a:`Es mecánico y actúa en las ruedas traseras.`},
+  {c:"veh",d:1,q:`¿Qué hace el sistema de frenos ABS?`,a:`Evita el bloqueo de las ruedas y permite mantener el control de la dirección.`},
+  {c:"veh",d:2,q:`¿Qué pasa si falla el ABS?`,a:`El sistema de frenos sigue funcionando, pero sin la función antibloqueo.`},
+  {c:"veh",d:2,q:`¿Cuándo funcionan los servofrenos?`,a:`Solo con el motor en marcha (aumentan la fuerza de frenado).`},
+  {c:"veh",d:3,q:`Pedal de freno muy largo o blando: ¿qué indica?`,a:`Posible entrada de aire al sistema.`},
+  {c:"veh",d:2,q:`Bajo nivel de líquido de frenos: ¿qué indica?`,a:`Una posible fuga.`},
+  {c:"veh",d:2,q:`¿Cómo se limpian los bornes sulfatados de la batería?`,a:`Con agua y bicarbonato.`},
+  {c:"veh",d:3,q:`¿A qué puede deberse la excesiva temperatura de la batería?`,a:`A un deficiente funcionamiento del regulador de voltaje.`},
+  {c:"veh",d:3,q:`Si las ruedas del vehículo se calientan, ¿qué indica?`,a:`Roce de la balata o pastillas de freno por estar muy ajustadas.`},
+  {c:"veh",d:2,q:`¿Qué función cumple el carburador?`,a:`Realiza la mezcla exacta del aire con el combustible.`},
+  {c:"veh",d:3,q:`¿Dónde va situado el termostato de un motor?`,a:`En el bloque motor, en la salida del líquido hacia el radiador.`},
+  {c:"veh",d:3,q:`¿La batería alimenta al alternador?`,a:`No. La batería NO alimenta al alternador.`},
+  {c:"veh",d:3,q:`¿Cuáles son los elementos fijos del motor?`,a:`Culata, block y cárter.`},
+  {c:"veh",d:3,q:`¿Qué provoca el plomo en el cuerpo?`,a:`Lesiones en el sistema nervioso central.`},
+  {c:"veh",d:2,q:`¿Cuáles son los síntomas de amortiguadores en mal estado?`,a:`Se inclina/levanta al frenar, se balancea en curvas, rebota, desgaste irregular de neumáticos y las luces oscilan de noche.`},
+  {c:"veh",d:2,q:`En autos eléctricos, ¿qué hace el frenado regenerativo?`,a:`Convierte la energía del frenado en carga para la batería.`},
+  {c:"veh",d:2,q:`¿Hasta qué % conviene cargar un auto eléctrico a diario?`,a:`Hasta 80-90%, para prolongar la vida de la batería.`},
+
+  {c:"seg",d:1,q:`¿Qué es la seguridad ACTIVA?`,a:`Sistemas que PREVIENEN siniestros: neumáticos, frenos, luces, dirección.`},
+  {c:"seg",d:1,q:`¿Qué es la seguridad PASIVA?`,a:`Elementos que REDUCEN los daños: cinturón, airbag, carrocería, reposacabezas.`},
+  {c:"seg",d:1,q:`¿Desde qué año es obligatorio el cinturón en los asientos traseros?`,a:`Desde el año 2002.`},
+  {c:"seg",d:1,q:`¿Puede el cinturón usarse por más de una persona?`,a:`No, nunca.`},
+  {c:"seg",d:2,q:`Un choque a 50 km/h sin cinturón equivale a caer de…`,a:`Un 4° piso.`},
+  {c:"seg",d:2,q:`Un choque a 70 km/h sin cinturón equivale a caer de…`,a:`Un 7° piso.`},
+  {c:"seg",d:2,q:`Un choque a 90 km/h sin cinturón equivale a caer de…`,a:`Un piso 11.`},
+  {c:"seg",d:2,q:`¿Cuánto reduce el airbag (junto al cinturón) las lesiones mortales?`,a:`Hasta un 20%.`},
+  {c:"seg",d:2,q:`¿Es eficaz el airbag sin cinturón?`,a:`No. El airbag no es eficaz si no se usa junto con el cinturón.`},
+  {c:"seg",d:2,q:`¿Cuál es la separación máxima entre la cabeza y el apoyacabezas?`,a:`La mínima posible, nunca superior a 4 cm.`},
+
+  {c:"vis",d:1,q:`¿Cuántos grados abarca la visión periférica?`,a:`180 grados.`},
+  {c:"vis",d:3,q:`¿Qué es la DENSIDAD DE PAUTA?`,a:`Cuando hay muchos objetos juntos, parecen estar más lejos de lo que realmente están.`},
+  {c:"vis",d:3,q:`¿Qué es la PERSPECTIVA LINEAL?`,a:`Líneas convergentes hacen que un objeto parezca más alejado de lo que está.`},
+  {c:"vis",d:3,q:`¿Qué es el TAMAÑO RELATIVO?`,a:`Objetos del mismo tamaño parecen de distinto tamaño según la distancia.`},
+  {c:"vis",d:3,q:`¿Qué es el SOBRECUBRIMIENTO?`,a:`Un objeto que tapa a otro parece estar más cerca del ojo.`},
+  {c:"vis",d:2,q:`¿Qué es la PERCEPCIÓN SELECTIVA?`,a:`La tendencia del cerebro a enfocarse solo en lo que espera ver, ignorando otros estímulos.`},
+  {c:"vis",d:3,q:`¿Cuánta luz refleja la ropa oscura?`,a:`Solo el 5%. La blanca refleja 80% y los materiales reflectantes 90-98%.`},
+
+  {c:"vul",d:3,q:`¿Cuánto tiempo extra puede necesitar una persona mayor para cruzar una calle de 16 m?`,a:`4 segundos más que una persona joven.`},
+  {c:"vul",d:3,q:`¿Hasta qué edad no tienen los niños el campo visual completamente desarrollado?`,a:`Hasta los 15 años.`},
+  {c:"vul",d:3,q:`¿Entre qué edades mejora la seguridad vial en los niños?`,a:`Entre los 9 y 12 años.`},
+  {c:"vul",d:2,q:`¿Cuánto reduce el casco el riesgo de lesiones graves en la cabeza de un ciclista?`,a:`3 veces.`},
+  {c:"vul",d:1,q:`¿Qué distancia lateral hay que dejar al adelantar a un ciclista?`,a:`1,5 metros.`},
+  {c:"vul",d:2,q:`¿Hasta qué edad debe viajar un niño a contramarcha (mínimo)?`,a:`Hasta los 2 años mínimo.`},
+  {c:"vul",d:3,q:`¿Qué certificación deben tener los SRI en Chile?`,a:`Norma 3CV ASN, con etiqueta amarilla de certificación.`},
+  {c:"vul",d:2,q:`¿Cuántas sillas de seguridad se pueden instalar en la parte trasera?`,a:`Hasta 3.`},
+  {c:"vul",d:1,q:`¿Desde qué edad pueden ir los niños en el asiento delantero?`,a:`Desde los 12 años (los menores de 12 no pueden ir adelante).`},
+
+  {c:"sen",d:1,q:`¿Qué indica la LUZ ROJA INTERMITENTE del semáforo?`,a:`Ceda el paso.`},
+  {c:"sen",d:1,q:`¿Qué indica la LUZ AMARILLA del semáforo?`,a:`Prevención: detenerse antes de entrar al cruce (viene la roja).`},
+  {c:"sen",d:2,q:`¿Qué indica la LUZ AMARILLA INTERMITENTE?`,a:`Advierte peligro: aproximarse a velocidad reducida y con precaución.`},
+  {c:"sen",d:2,q:`Con luz VERDE, ¿cuándo NO debes avanzar?`,a:`Si pasado el cruce no tienes al menos 10 metros expeditos en tu pista.`},
+  {c:"sen",d:2,q:`Carabinero visto de frente o de espalda: ¿qué indica?`,a:`Detención.`},
+  {c:"sen",d:2,q:`Carabinero con el brazo en alto: ¿qué indica?`,a:`Advertencia (prepararse para detenerse).`},
+  {c:"sen",d:2,q:`Carabinero visto de costado: ¿qué indica?`,a:`Autoriza a avanzar.`},
+  {c:"sen",d:2,q:`¿De qué color son las señales de advertencia de peligro (preventivas)?`,a:`Amarillas, en forma de rombo.`},
+  {c:"sen",d:2,q:`¿De qué color son las señales transitorias (trabajos en la vía)?`,a:`Naranja. Solo la que advierte inicialmente la presencia de trabajos es amarilla.`},
+  {c:"sen",d:2,q:`¿De qué color son las señales informativas de servicios?`,a:`Azul. Las turísticas o recreacionales son de color café.`},
+
+  {c:"norm",d:1,q:`¿Velocidad máxima en ZONA URBANA?`,a:`50 km/h.`},
+  {c:"norm",d:1,q:`¿Velocidad máxima en ZONA DE COLEGIOS?`,a:`30 km/h.`},
+  {c:"norm",d:2,q:`¿Velocidad máxima en ZONA RURAL?`,a:`100 km/h (120 km/h si es de dos pistas o más).`},
+  {c:"norm",d:1,q:`¿Velocidad máxima en AUTOPISTA?`,a:`120 km/h.`},
+  {c:"norm",d:1,q:`¿Con cuánta anticipación debes señalizar un viraje?`,a:`Al menos 30 metros antes.`},
+  {c:"norm",d:3,q:`En una carretera de 100 km/h, ¿con cuánta anticipación señalizas el viraje?`,a:`Unos 300 a 400 metros antes.`},
+  {c:"norm",d:2,q:`¿A qué distancia de una curva, puente o túnel está prohibido virar en U?`,a:`A menos de 200 metros.`},
+  {c:"norm",d:2,q:`¿A qué distancia de la cuneta debes estacionar?`,a:`A no más de 30 cm.`},
+  {c:"norm",d:2,q:`¿Qué distancia mínima debes dejar respecto a otros vehículos al estacionar?`,a:`60 cm.`},
+  {c:"norm",d:2,q:`¿Cuántas personas se pueden transportar en Clase B?`,a:`Hasta 9 personas.`},
+  {c:"norm",d:3,q:`¿Qué remolque permite la Clase B?`,a:`Uno cuya tara no supere la del vehículo.`},
+  {c:"norm",d:2,q:`¿Cuánto deben permitir ver las luces BAJAS?`,a:`No menos de 50 metros.`},
+  {c:"norm",d:2,q:`¿Cuánto deben permitir ver las luces ALTAS?`,a:`Mínimo 150 metros.`},
+  {c:"norm",d:2,q:`¿Qué luces se usan con niebla intensa?`,a:`Luces bajas y antiniebla. NUNCA las altas (se reflejan en la niebla).`},
+  {c:"norm",d:1,q:`¿Cómo es la secuencia correcta del RCP?`,a:`30 compresiones torácicas y 2 respiraciones.`},
+  {c:"norm",d:1,q:`¿A qué número se llama una ambulancia en Chile?`,a:`Al 131.`},
+  {c:"norm",d:2,q:`¿Cuándo se permite adelantar?`,a:`Solo en vías de doble sentido y con línea divisoria discontinua. Nunca en curvas, puentes o pasos a nivel.`},
+  {c:"norm",d:1,q:`En una intersección sin señales, ¿quién tiene preferencia?`,a:`El vehículo que viene por la derecha.`},
+  {c:"norm",d:2,q:`En una rotonda, ¿quién tiene preferencia?`,a:`Los vehículos que ya están dentro de la rotonda.`},
+  {c:"norm",d:2,q:`Conduciendo bajo la lluvia, ¿qué distancia mantienes con el de adelante?`,a:`El doble que en condiciones normales.`},
+  {c:"norm",d:2,q:`¿A qué distancia se colocan los triángulos al cambiar una llanta?`,a:`A 50 metros en carretera y 10 metros en ciudad.`},
+  {c:"norm",d:2,q:`En una pendiente DESCENDENTE, ¿cómo debes conducir?`,a:`Frenar con el motor en marcha baja. Nunca en neutro.`},
+  {c:"norm",d:2,q:`En una pendiente ASCENDENTE, ¿cómo debes conducir?`,a:`Mantener una marcha baja para que el motor tenga más fuerza.`},
+  {c:"norm",d:2,q:`¿Cuál es la posición correcta de las manos en el volante?`,a:`A las diez para las dos (como en un reloj).`},
+  {c:"norm",d:2,q:`En viajes largos, ¿cuánto debes descansar?`,a:`En viajes de 2 horas o 200 km, descansar 20-30 minutos.`},
+  {c:"norm",d:2,q:`¿Cuántos días puedes circular con un vehículo sin patente?`,a:`0 días (Ley patente 0).`},
+  {c:"norm",d:3,q:`¿Cuánto combustible ahorra una conducción eficiente?`,a:`Entre un 10 y un 15% (reduciendo velocidad y evitando frenadas/aceleraciones bruscas).`},
+  {c:"norm",d:2,q:`¿Qué cubre el Seguro Obligatorio (SOAP)?`,a:`Lesiones y muertes de personas en accidentes de tránsito.`},
+  {c:"norm",d:2,q:`¿Qué indican las líneas blancas continuas?`,a:`Que no se permite adelantar.`},
+  {c:"norm",d:2,q:`¿Qué indican las líneas amarillas continuas en la solera?`,a:`Que no se permite estacionar (marcan el límite de la calzada / zonas peligrosas).`},
+  {c:"norm",d:3,q:`¿Cuánto recorre un tren para detenerse?`,a:`Entre 800 y 1000 metros. (Suele ser pregunta de doble puntaje.)`},
+  {c:"norm",d:2,q:`¿Qué tiende a hacer la fuerza centrífuga en una curva?`,a:`Sacar al vehículo de la carretera. El viento no influye en ella.`},
+  {c:"norm",d:1,q:`¿Quiénes tienen derecho preferente de paso?`,a:`Ambulancias, bomberos y policías en situaciones de emergencia.`}
+];
+const OFI = [{"q": "Su vehículo se desvía hacia un lado cuando usted frena. Usted debería", "a": "Consultar con su mecánico lo antes posible", "o": ["Cambiar los neumáticos de un lado hacia el otro y viceversa", "Bombear el pedal al frenar", "Usar su freno de mano", "Consultar con su mecánico lo antes posible"]}, {"q": "Su vehículo se desvía hacia un lado cuando usted frena.¿Cuál es la falla más probable?", "a": "Frenos mal ajustados", "o": ["Un bajo nivel del líquido de frenos", "Su freno de mano está todavía puesto", "Frenos mal ajustados", "Neumáticos con presión de aire inadecuada"]}, {"q": "Mientras conduce usted siente un fuerte olor a gasolina.¿Qué debería hacer usted?", "a": "Detenerse e investigar el problema", "o": ["No preocuparse, ya que sólo son los gases de escape", "Continuar a una velocidad reducida", "Continuar porque sabe que se detendrá algunos kilómetros más allá", "Detenerse e investigar el problema"]}, {"q": "¿Cómo puede prevenir usted el riesgo de incendio de su vehículo?", "a": "Revisando su vehículo ante cualquier olor a gasolina extraño", "o": ["Manteniendo los niveles de agua sobre el máximo", "Evitando conducir con el estanque lleno de combustible", "Usando gasolina sin plomo", "Revisando su vehículo ante cualquier olor a gasolina extraño"]}, {"q": "¿Por qué es importante usar zapatos apropiados cuando conduce?", "a": "Para tener un adecuado control de los pedales", "o": ["Para tener un adecuado control de los pedales", "Para evitar el desgaste acelerado de las gomas de los pedales", "Para poder efectuar los cambios de marcha más rápidamente", "Para poder caminar sin problemas en el caso que necesite solicitar ayuda"]}, {"q": "En un automóvil,¿cuál de los siguientes elementos reduce el riesgo de lesiones de cuello en una colisión?", "a": "Un asiento con apoya-cabeza ajustado en forma apropiada", "o": ["Un asiento dotado de air-bag (bolsa de aire)", "Los frenos ABS", "Una columna de dirección colapsable", "Un asiento con apoya-cabeza ajustado en forma apropiada"]}, {"q": "¿Qué significa esta luz de advertencia en el panel de instrumentos?", "a": "Luces neblineras", "o": ["Luces neblineras", "Intermitentes de advertencia de peligro", "Luces altas", "Freno de mano puesto"]}, {"q": "Es esencial que la presión de los neumáticos sea chequeada regularmente.¿Cuándo se debe hacer esto?", "a": "Cuando los neumaticos están frios", "o": ["Después de un viaje largo", "Después de conducir a alta velocidad", "Cuando los neumaticos están frios", "Cuando los neumáticos están calientes"]}, {"q": "Las luces de advertencia de peligro deberían ser usadas", "a": "Para advertir a quienes vienen detrás de un peligro que hay más adelante", "o": ["Cuando estaciona en doble fila respecto a otro vehículo estacionado junto a la cuneta", "Para advertir a quienes vienen detrás de un peligro que hay más adelante", "Para advertir a quienes vienen detrás suyo que usted pretende virar", "Para advertir a los demás que usted tiene prisa"]}, {"q": "¿Cuándo usaría usted las luces de advertencia de peligro de su vehículo?", "a": "Cuando este en pana y obstacuhzando e: transito", "o": ["Cuando esté en pana moviéndose lentamente", "Cuando esté siendo remolcado", "Cuando esté retrocediendo en una calle de poco tránsito", "Cuando este en pana y obstacuhzando e: transito"]}, {"q": "Usted está probando la suspensión de su vehículo cuando nota que éste rebota u oscila al cargarlo en un extremo lateral frontal.¿Qué significa esto?", "a": "Amortiguadores gastados", "o": ["Neumáticos gastados", "Neumáticos poco inflados", "Volante de dirección no centrado", "Amortiguadores gastados"]}, {"q": "¿Por qué los neumáticos deben mantenerse a la presión indicada por el fabricante?", "a": "Para ayudar a evitar que ei automóvil se roncee", "o": ["Para que el vehículo se mantenga a la altura correcta sobre la vía", "Para no desgastar el motor", "Para ayudar a evitar que ei automóvil se roncee", "Para evitar que el automóvil se incline hacia un lado"]}, {"q": "¿A qué se debe un alto consumo de combustible?", "a": "Frecuentes frenadas y aceleraciones", "o": ["Fallas en el sistema de dirección", "Aceleraciones en curvas", "Frecuentes frenadas y aceleraciones", "Conducción en marchas altas"]}, {"q": "Desenganchar el motor del vehículo", "a": "reduce e: control del conductor", "o": ["permite un mejor control al conductor", "hace más fácil las maniobras", "aumenta el consumo de combustible", "reduce e: control del conductor"]}, {"q": "¿Por qué no es bueno desenganchar el motor del vehículo al ir circulando?", "a": "Porque no hay frenado del motor", "o": ["Porque ello hace que el vehículo resbale", "Porque el motor se detendrá", "Porque no hay frenado del motor", "Porque el motor funcionará más rápido"]}, {"q": "¿Cuáles son las 2 principales razones por las cuales no debe desengancharse el motor al ir cuesta abajo? Marque dos respuestas al Porque tendra menor contrel del frenado y dirección", "a": "Porque el vehículo agarrara velocidad", "o": ["Porque el vehículo agarrara velocidad", "Porque el consumo de combustible será mayor", "Porque se gastan y deterioran más los neumáticos", "Porque se daña el motor"]}, {"q": "¿Por qué usted no debería conducir presionando el pedal de embrague durante más tiempo que el necesario?", "a": "Porque reduce su contro! sobre el vehículo", "o": ["Porque reduce su contro! sobre el vehículo", "Porque aumenta el desgaste de la caja de cambios", "Porque aumenta el consumo de combustible", "Porque reduce el agarre de los neumáticos"]}, {"q": "¿Para qué sirven los seguros de niños de los vehículos?", "a": "impiden que tas puertas puedan abrirse desde el nterior", "o": ["Aseguran las hebillas de los cinturones de seguridad", "impiden que tas puertas puedan abrirse desde el nterior", "Bloquean las ventanas traseras manteniéndolas cerradas", "Impiden que los asientos se reclinen"]}, {"q": "Una baja presión de aire en los neumáticos delanteros", "a": "hace sentir 1a dirección más pesada", "o": ["hace que el vehículo tienda a torcer hacia un lado", "mejora el rendimiento del combustible", "hace sentir la dirección más liviana", "hace sentir 1a dirección más pesada"]}, {"q": "¿Qué distancia de detención tiene un tren que circula a alrededor de 100 km/h?", "a": "Entre 806 y 1000 metros", "o": ["Aproximadamente 100 metros", "Aproximadamente 200 metros", "Entre 806 y 1000 metros", "Más de 2000 metros"]}, {"q": "Usted va circulando a 50 km/h a lo largo de un camino plano y de asfalto. Las condiciones climáticas son buenas. Sus neumáticos y frenos también están buenos. En estas circunstancias, detenerse le tomará aproximadamente", "a": "unos 30 metros", "o": ["unos 50 metros", "unos 15 metros", "unos 10 metros", "unos 30 metros"]}, {"q": "La distancia de detención total es igual a la suma de la distancia de reacción y la de frenado Aproximadamente,¿cuál es la mínima distancia de detención total en un asfalto seco, si usted viaja a 90 km/h?", "a": "Unos 70 metros", "o": ["Unos 50 metros", "Unos 70 metros", "Unos 30 metros", "Unos 120 metros"]}, {"q": "Usted conduce un vehículo con frenos y neumáticos en buenas condiciones. La superficie de calzada está seca.¿Cuál es la distancia aproximada de detención total (distancia de reacción más distancia de frenado) si usted va a 70 km/h?", "a": "Unos 45 metros", "o": ["Unos 15 metros", "Unos 80 metros", "Unos 45 metros", "Unos 25 metros"]}, {"q": "Usted está descendiendo una pendiente muy larga.¿Qué debería hacer para ayudar a controlar la velocidad de su vehículo?", "a": "Seleccionar una marcha baja", "o": ["Tomar el manubrio firmemente", "Seleccionar una marcha baja", "Seleccionar neutro", "Presionar el pedal de embrague"]}, {"q": "Usted está virando hacia la derecha en un camino resbaladizo y las ruedas traseras de su vehículo resbalan hacia la izquierda.¿Qué debería hacer usted?", "a": "Gutar cuidadosamente hac:a la izquierda", "o": ["Frenar firmemente y no girar el manubrio", "Gutar cuidadosamente hac:a la izquierda", "Usar el embrague y frenar firmemente", "Girar hacia la derecha"]}, {"q": "Usted está próximo a descender por una pendiente muy pronunciada.¿Qué debería hacer para controlar la velocidad de su vehículo?", "a": "Seleccionar un cambio baro y usar los frenos cuidadosamente", "o": ["Seleccionar un cambio baro y usar los frenos cuidadosamente", "Seleccionar un cambio alto y usar los frenos cuidadosamente", "Seleccionar un cambio alto y usar los frenos firmemente", "Seleccionar un cambio bajo y evitar usar los frenos"]}, {"q": "La distancia de frenado es la que recorre un vehículo desde que se presiona el freno hasta que el vehículo se detiene. En condiciones normales,¿cuál sería aproximadamente su distancia de frenado si usted circula a 90 km/h?", "a": "unos 45 metros", "o": ["unos 45 metros", "Unos 20 metros", "Unos 15 metros"]}, {"q": "¿Qué debería hacer usted para corregir un coletazo de las ruedas traseras?", "a": "Girar el votante hacia el lado que se desplaza la cola del vehículo", "o": ["No girar el volante del vehículo para nada", "Girar el volante hacia el lado opuesto al coletazo", "Girar el votante hacia el lado que se desplaza la cola del vehículo", "Aplicar su freno de mano"]}, {"q": "Usted va a 70 km/hr. Aproximadamente,¿qué distancia recorrerá su vehículo desde el momento en que usted se percata de un peligro que hay más adelante hasta que comienza a frenar?", "a": "Unos 20 metros", "o": ["Unos 5 metros", "Unos 8 metros", "Unos 20 metros", "Unos 30 metros"]}, {"q": "¿Cuál es el tiempo de reacción promedio de un conductor ante un imprevisto?", "a": "1 segundo", "o": ["1 segundo", "0.1 minuto", "0.1 segundo", "2 segundos"]}, {"q": "¿Cuál de las siguientes afirmaciones es correcta en cuanto a la capacidad de reacción de los conductores jóvenes inexpertos, comparados con conductores experimentados cuya edad fluctúa entre 35 y 50 años?", "a": "En situaciones reales, que requieren reacciones complejas, los conductores experimentados feaccionan en un tiempo mas corto que 105 Jovenes ¡nexpertos", "o": ["Ante situaciones complejas, los conductores jóvenes reaccionan más rápido", "Los conductores jóvenes reaccionan siempre con mayor rapidez", "No hay diferencia entre la capacidad de reacción de los conductores jóvenes inexpertos y la de los mayores", "En situaciones reales, que requieren reacciones complejas, los conductores experimentados feaccionan en un tiempo mas corto que 105 Jovenes ¡nexpertos"]}, {"q": "De los siguientes factores,¿cuál es el que con mayor frecuencia se presenta en los accidentes de tránsito?", "a": "Los errores de :os conductcres", "o": ["Los errores de :os conductcres", "Las condiciones climáticas", "Las condiciones de calles y caminos", "Las fallas mecánicas"]}, {"q": "En cuanto al estrés al conducir,¿cuál de las siguientes afirmaciones es falsa?", "a": "Etestres no influye en absoluto en los actos de un conductor", "o": ["Un grado demasiado alto de estrés disminuye su campo de atención", "Un estrés moderado puede contribuir a mejorar su rendimiento", "Un conductor muy estresado puede tener reacciones de pánico", "Etestres no influye en absoluto en los actos de un conductor"]}, {"q": "¿Cuál es el mejor consejo para una conducción segura?", "a": "Contar siempre con tiempo de sobra ai conducir", "o": ["Mantener el vehículo en muy buenas condiciones", "Respetar los límites de velocidad", "Evitar conducir durante la noche", "Contar siempre con tiempo de sobra ai conducir"]}, {"q": "En cuanto a la concentración de alcohol en la sangre de una persona que ingiere la misma cantidad en ocasiones diferentes,¿cuál de las siguientes afirmaciones es falsa?", "a": "St ta cantidad de alcohol ingerida en cada ocasion es exactamente la misma, ¡a concentracion de alcohol! el: la sangre tambien será ta misma", "o": ["Aunque la persona beba la misma cantidad de alcohol cada ocasión, la concentración de éste en su sangre puede ser diferente", "La concentración de alcohol depende de cuánto se come en cada ocasión", "Entre otros factores, la concentración de alcohol también depende del tiempo que dura la ingestión cada vez", "St ta cantidad de alcohol ingerida en cada ocasion es exactamente la misma, ¡a concentracion de alcohol! el: la sangre tambien será ta misma"]}, {"q": "¿Cuáles son los primeros síntomas de cansancio?", "a": "Se convenza a sentir falta de «mteres y aparecen los postezos", "o": ["Se comienza a sentir calor y agresividad", "Se convenza a sentir falta de «mteres y aparecen los postezos", "Se comienza a sentir dificultad para mantener la dirección", "Se comienza a sentir que los párpados se cierran"]}, {"q": "El modo como percibimos una situación depende, entre otros factores, de nuestras experiencias anteriores, intereses, expectativas y necesidades. En este contexto,¿cuál de las siguientes afirmaciones es falsa?", "a": "Varios conductores que ven to mismo perciben las situaciones de transito tambien del mismo modo", "o": ["Un conductor que siente apremio por falta de tiempo puede subestimar los riesgos de la alta velocidad", "Los conductores ven principalmente aquello que les interesa en un momento y lo que esperan ver", "Varios conductores que ven to mismo perciben las situaciones de transito tambien del mismo modo", "También a los conductores experimentados a veces les pasan inadvertidas informaciones importantes"]}, {"q": "¿Qué debería hacer usted si está tomando un remedio para la los y no está seguro si éste puede afectar su conducción?", "a": "Preguntar a su doctor", "o": ["No conducir tan pronto haya ingerido el remedio, sino que esperar un rato", "Conducir siempre que se sienta bien", "Preguntar a su doctor", "Solicitar consejo a un amigo o pariente"]}, {"q": "Usted está tomando unos remedios que probablemente afectarán su conducción.¿Qué debería hacer?", "a": "Sohcrtar consejc medico antes de conduch", "o": ["Limitar su conducción sólo a viajes esenciales", "Conducir solamente acompañado por alguien que posea una licencia de conducir", "Conducir sólo distancias cortas", "Sohcrtar consejc medico antes de conduch"]}, {"q": "¿Cómo afecta el consumo de alcohol a su conducción?", "a": "Reduce su concentracion", "o": ["Acelera sus reacciones", "Aumenta su lucidez", "Mejora su coordinación", "Reduce su concentracion"]}, {"q": "Si usted va conduciendo y comienza a sentir cansancio, es mejor que se detenga lo antes posible.¿Qué debería hacer usted mientras no pueda detenerse?", "a": "Asegurarse de que entre arre fresco a su vehrculo", "o": ["Aumentar su velocidad para encontrar pronto un lugar donde detenerse", "Golpear suave y repetidamente el manubrio", "Asegurarse de que entre arre fresco a su vehrculo", "Modificar permanentemente la velocidad para mejorar la concentración"]}, {"q": "¿Qué consejo daría usted a un conductor que ha ingerido bebidas alcohólicas en una fiesta?", "a": "Que se vuelva a casa en tax", "o": ["Que se vuelva a casa en tax", "Que tome una taza de café cargado y luego conduzca a casa", "Que se vuelva a casa conduciendo lenta y muy cuidadosamente", "Que espere un rato antes de irse conduciendo a casa"]}, {"q": "Un conductor hace algo que a usted le molesta.¿Qué debería hacer usted?", "a": "Tratar de no reaccionar", "o": ["Hacerle saber cómo se siente", "Encender y apagar sus luces delanteras repetidamente", "Tratar de no reaccionar", "Tocar la bocina"]}, {"q": "Usted está a punto de conducir, pero se siente enfermo. Usted debería", "a": "nc manejar", "o": ["tomar una medicina antes de conducir", "acortar el viaje si puede", "nc manejar", "prometerse a sí mismo que se va a acostar tan pronto haya llegado a casa"]}, {"q": "En relación con el cansancio y la conducción, de las siguientes afirmaciones,¿cuál es falsa?", "a": "Stun conductor esta cansado, lc mejor es que su acompañante le vaya hablando permanentemente", "o": ["El cansancio es una causa importante de los accidentes que se registran en carreteras", "Un conductor cansado ve empeorada su capacidad de reacción", "Stun conductor esta cansado, lc mejor es que su acompañante le vaya hablando permanentemente", "El desorientarse y plantearse preguntas tales como,¿pasé ya la ciudad X o aún no?, es un síntoma de cansancio"]}, {"q": "Usted comienza a sentir cansancio en un viaje.¿Qué debería hacer?", "a": "Detenerse y dormhr una pequeña s.esta o detenerse y tomar un poco de caté", "o": ["Detenerse y comer una gran comida", "Detenerse inmediatamente y respirar profundo", "Terminar el viaje y después dormir", "Detenerse y dormhr una pequeña s.esta o detenerse y tomar un poco de caté"]}, {"q": "¿Qué precauciones debe tomar un conductor cuando asiste a un evento social?", "a": "Evitar consumir alcohol", "o": ["Beber bastante café después de ingerir bebidas alcohólicas", "Evitar circular por calles de mucho tráfico después de beber alcohol", "Evitar beber alcohol con el estómago vacío", "Evitar consumir alcohol"]}, {"q": "El tiempo que transcurre desde que usted percibe un peligro hasta que actúa se denomina tiempo de reacción. En una emergencia,¿qué factor influye en su tiempo de reacción?", "a": "Su estade de salud", "o": ["Su estade de salud", "El estado de la calzada", "La velocidad de su vehículo", "Las condiciones climáticas"]}, {"q": "Al aproximarse a una curva hacia la izquierda usted debería mantenerse bien a la derecha¿Por qué?", "a": "Para tener una menor vd ODE amen", "o": ["Para superar el efecto de pendiente de la calzada", "Para tener una menor vd ODE amen", "Para permitirle el adelantamiento a quienes vienen rápido detrás suyo", "Para estar en una ubicación más segura en caso de que el vehículo se roncee"]}, {"q": "Usted se aproxima a una curva hacia la izquierda.¿Qué debería hacer?", "a": "Mantenerse bier a 3 0ererDa para ener jr a Te Ol vna SUD tulo", "o": ["Mantenerse bien a la derecha ya que así tardará menos en pasar la curva", "Mantenerse bier a 3 0ererDa para ener jr a Te Ol vna SUD tulo", "Mantenerse bien a la izquierda para evitar cualquier obstáculo que pueda haber en la cuneta", "Mantenerse bien a la izquierda para hacer la curva menos pronunciada"]}, {"q": "Al adelantar a animales que van por el camino, usted no debería", "a": "acelerar el motor o tocar ta bocina", "o": ["acelerar el motor o tocar ta bocina", "cambiar a una marcha más baja", "usar los señalizadores de viraje", "tener las luces encendidas"]}, {"q": "está esperando en un cruce en T. El vehículo azul que se acerca desde la izquierda señaliza a la derecha.¿Qué debería hacer usted?", "a": "Esperar hasta que el vehículo azul baya comenzado a virar", "o": ["Avanzar acelerando a fondo", "Ponerse en marcha antes de que el vehículo azul llegue al cruce", "Esperar hasta que el vehículo azul baya comenzado a virar", "Avanzar lentamente"]}, {"q": "Usted se ha quedado detenido justo al medio de un cruce ferroviario con sistema automático de señales y barreras y no puede echar a andar el motor nuevamente. La campanilla del cruce comienza a sonar.¿Qué debería hacer usted?", "a": "Salir del vehículo y alejarse de el", "o": ["Correr por la vía para intentar avisar al maquinista", "Salir del vehículo y alejarse de el", "Seguir intentando reiniciar la marcha del vehículo", "Intentar despejar el cruce empujando su vehículo"]}, {"q": "¿Qué debería hacer el conductor del auto señalado con la flecha? INNER\"¿US OS a P A Y al Sa e e 3 pt q", "a": "Continuar con precaución", "o": ["Retroceder para salir del cruce", "Esperar en el mismo lugar hasta tener luz verde", "Esperar hasta tener luz roja", "Continuar con precaución"]}, {"q": "¿Qué significa la señal que está efectuando el camión? o Ln”¿: A e « MN y", "a": "Elcarmion va a virar aia derecha", "o": ["El camión va a disminuir la velocidad y va a detenerse", "El conductor del camión le está indicando a usted que lo puede adelantar", "Elcarmion va a virar aia derecha", "El conductor del camión ha olvidado apagar sus luces indicadoras de viraje"]}, {"q": "A mayor parte de los accidentes de tránsito se produce en: a) Carreteras", "a": "intersecciones", "o": ["Salidas de colegios", "Caminos rurales", "intersecciones"]}, {"q": "Entre los accidentes de tránsito se distinguen distintos tipos de éstos. En Chile,¿cuál es el tipo de accidente que origina la mayor cantidad de muertos? . a) Los choques contra obstáculos fijos", "a": "Los atrepellos", "o": ["Las colisiones entre 2 o más vehículos", "Los atrepellos", "Los volcamientos"]}, {"q": "Usted llega a una intersección regulada por semáforo que se encuentra en rojo y, al mismo tiempo, un Carabinero le indica que avance,¿qué debe hacer usted?", "a": "Avanzar, porque tas imstrucciones de un Carabinero prevalecen sobre las señales del transito", "o": ["Detenerse, porque la luz roja se lo está indicando", "Avanzar, porque tas imstrucciones de un Carabinero prevalecen sobre las señales del transito", "Avanzar, sólo si detrás suyo no vienen otros vehículos", "Avanzar, sólo si está seguro que la luz roja está próxima a cambiar"]}, {"q": "¿En qué situación puede usted hacer uso de la bocina de su vehículo?", "a": "Cuando trata de preven« a otros acerca de un petigro", "o": ["Cuando cede a otro el derecho a vía", "Cuando saluda a otros usuarios de la vía", "Cuando trata de preven« a otros acerca de un petigro", "Cuando desea manifestar su disgusto"]}, {"q": "¿En qué situación retrocede usted con su vehículo en un cruce?", "a": "Sólo si rec:be indicacion expresa de un Carabinero", "o": ["Si no hay nadie detrás suyo", "Sólo si ha quedado detenido sobre el paso de peatones", "Sólo si rec:be indicacion expresa de un Carabinero"]}, {"q": "Usted se aproxima a un cruce de calles no señalizado. Por la otra calle también se aproxima un vehículo que pretende pasar el cruce.¿Quién tiene la prioridad para pasar?", "a": "Eb otro veticulo, siempre que el se venga acercando af cruce por el lado derecho suyo", "o": ["El vehículo más grande", "El vehículo que vaya a mayor velocidad", "Eb otro veticulo, siempre que el se venga acercando af cruce por el lado derecho suyo", "El otro vehículo, siempre que él se venga acercando al cruce por el lado izquierdo suyo"]}, {"q": "Cuando dos vehículos van a cruzarse en una intersección en la que no hay señalización alguna,¿quién debe ceder el paso?", "a": "E! que se acerca ai cruce por la izquierda del otro", "o": ["El vehículo más pequeño", "El vehículo que va por la calle de pistas más angostas", "El que se acerca al cruce por la derecha del otro", "E! que se acerca ai cruce por la izquierda del otro"]}, {"q": "¿Es seguro permitir que los niños viajen en un vehículo de 3 o 5 puertas en el espacio que queda detrás de los asientos traseros?", "a": "No, en ninguna circunstancia", "o": ["No, en ninguna circunstancia", "Sí, siempre que usted pueda ver sin problemas hacia atrás", "Sí, si son menores de 10 años", "No, a menos que los demás asientos estén ocupados"]}, {"q": "¿Cuál es la forma más segura para llevar a un niño de 3 o 4 años en su vehículo?", "a": "En el asiento trasero, en una silla de seguridad", "o": ["En la falda de un adulto compartiendo un mismo cinturón de seguridad", "En la falda de un adulto que va con su cinturón de seguridad", "En cualquier asiento, siempre que lleve puesto el cinturón de seguridad para adultos", "En el asiento trasero, en una silla de seguridad"]}, {"q": "La forma más segura de viajar en un automóvil para un niño menor de 2 años es", "a": "En una silla de seguridad. en el asiento trasero y mirando hacia atrás", "o": ["En brazos de un adulto", "Solo en el asiento delantero y con cinturón de seguridad", "Solo en el asiento trasero y con cinturón de seguridad", "En una silla de seguridad. en el asiento trasero y mirando hacia atrás"]}, {"q": "Usted va por una calle de doble sentido de tránsito. Para virar a la izquierda,¿dónde debería ubicarse?", "a": "Justo a la derecha de la hmea de centro de calzada", "o": ["Lo más a la derecha posible", "Justo a la izquierda de la línea de centro de calzada", "Justo a la derecha de la hmea de centro de calzada"]}, {"q": "Usted va detrás de un camión articulado que va a doblar a la derecha hacia una vía angosta¿Qué debe hacer usted? a Y > >”", "a": "Mantenerse detras de él hasta que finalice su mamobra", "o": ["Ñ 3 -", "Desplazarse rápidamente hacia la pista adyacente y sobrepasarlo", "Tocar la bocina para advertir su presencia", "Sobrepasarlo por la derecha mientras él se desplace hacia la izquierda", "Mantenerse detras de él hasta que finalice su mamobra"]}, {"q": "Usted va conduciendo su vehículo a 90 km/h que es la velocidad máxima permitida en esa vía.¿Qué hace usted si a pesar de todo un vehículo desea adelantarlo? Marque dos respuestas Pr $ ha. =” Ñ - Al ab A", "a": "Conduce lc mas a ta derecha pos:ble", "o": ["Conduce lc mas a ta derecha pos:ble", "Se desplaza hacia la berma y circula por ella", "Enciende sus luces de advertencia de peligro d| No acelera"]}, {"q": "Antes de adelantar a un vehículo de gran tamaño usted debería mantenerse suficientemente atrás de él.¿Por qué?", "a": "Para tener una me:or visual hacia adelante sobre la wa", "o": ["Para tener una me:or visual hacia adelante sobre la wa", "Para tener espacio suficiente que le permita acelerar y adelantar en las curvas", "Para tener espacio suficiente en caso de que el vehículo se detenga y retroceda", "Para poder ver mejor las señales que le pueda hacer su conductor"]}, {"q": "¿Por qué adelantar a un camión es más arriesgado que adelantar a un auto?", "a": "Porque los camiones son mas ¡argos que los autos", "o": ["Porque los camiones pueden detenerse sorpresivamente", "Porque los camiones son mas ¡argos que los autos", "Porque los frenos de los camiones no son tan buenos", "Porque los camiones suben las pendientes más lentamente"]}, {"q": "Usted está a punto de adelantar a un vehículo pesado.¿Qué debería hacer?", "a": "Mantenerse bien atrás del vehículo para tener una mayor visual", "o": ["Tocar la bocina para advertirle al conductor que usted está ahí", "Mantenerse bien atrás del vehículo para tener una mayor visual", "Conducir cerca del vehículo con el propósito de adelantarlo rápidamente", "Encender y apagar sus luces y esperar hasta que el conductor le avise que es seguro adelantar"]}, {"q": "Usted va conduciendo de día por una zona rural. La calzada tiene pavimento en buen estado y tránsito bidireccional. A menos que alguna señal le indique otra cosa, usted no debe exceder los", "a": "100 km/hr", "o": ["50 km/hr", "90 km/hr", "100 km/hr", "120 km/hr"]}, {"q": "Usted va conduciendo en la ciudad por una calle con 2 pistas en sentido único de tránsito. A menos que alguna señal le indique otra cosa, usted no debe exceder los", "a": "60 km/hr", "o": ["30 km/hr", "50 km/hr", "60 km/hr", "80 km/hr"]}, {"q": "Como norma general, antes de tomar una curva cerrada, usted debe", "a": "dismininr la velocidad, para tuego acelerar gradualmente mientras la va recorrendo", "o": ["acelerar para salir cuanto antes de ella", "acelerar para luego reducir la velocidad mientras vaya saliendo de ella", "disminuir la velocidad, pero sólo si la calzada está mojada", "dismininr la velocidad, para tuego acelerar gradualmente mientras la va recorrendo"]}, {"q": "¿En qué circunstancia usted se detendría justo sobre un cruce cebra existente a mitad de cuadra?", "a": "Cuando ello sea necesario para evitar un accidente", "o": ["En ningún momento", "Cuando no hay peatones esperando para cruzar", "Durante la noche", "Cuando ello sea necesario para evitar un accidente"]}, {"q": "Usted va a dejar su vehículo estacionado.¿En qué caso puede dejarlo con el motor funcionando?", "a": "En ningún caso", "o": ["En ningún caso", "Si va a estar estacionado menos de 5 minutos", "Si la batería está descargada", "Si en el vehículo va a permanecer una persona"]}, {"q": "En una vía urbana de sentido único de tránsito, sin señalización que permita o prohíba el estacionamiento,¿a qué lado puede estacionar?", "a": "Solo al tadc derecho segun e: sentido del transito", "o": ["Aambos lados", "En ninguno, porque no hay señales que lo permitan", "Solo al tadc derecho segun e: sentido del transito", "Sólo al lado izquierdo según el sentido del tránsito"]}, {"q": "Ál verse involucrado en un accidente", "a": "Al enfrentar una 1uz roja de un semaforo", "o": ["Al enfrentar una señal CEDA EL PASO", "Al enfrentar una 1uz roja de un semaforo", "Ante un cruce cebra en el que no hay peatones cruzando ni esperando para cruzar el Cuando un Carabinero se to sorrcita"]}, {"q": "¿A cuántos metros de una esquina es lo más cerca que usted puede estacionar?", "a": "10 metros", "o": ["5 metros", "10 metros", "12 metros", "15 metros"]}, {"q": "De noche, en una zona rural, por emergencia usted estaciona su vehículo al costado de la vía¿En qué circunstancia debe usted encender sus luces de estacionamiento?", "a": "Siempre", "o": ["Cuando la berma no es suficientemente ancha y parte del vehículo queda sobre la calzada", "Cuando el centro de la calzada está demarcado con línea blanca continúa", "Cuando el camino es de tierra", "Siempre"]}, {"q": "¿Qué hace usted ante esta situación? Y e 14$2 Hi Á A la 16 naa (1 iS a TS : e y - y o e == RS y | e y y\"", "a": "Se detiene", "o": ["Continúa a la misma velocidad", "Toca la bocina", "Pasa el paso de peatones lo más rápido posible", "Se detiene"]}, {"q": "Usted conduce a 90 km/h cuando la vía es obstruida sorpresivamente por un camión que está virando a la izquierda.¿Qué es lo primero que hace usted? 5", "a": "Frena firmemente", "o": ["Hace señales de luces y toca la bocina", "Frena firmemente", "Se desplaza a la pista de la izquierda", "Disminuye levemente la velocidad"]}, {"q": "¿Adquiere usted un derecho sobre otros usuarios de la vía cuando utiliza sus luces indicadoras de viraje?", "a": "No, porque usted sólo esta advirtiendo su Íntencion de realizar una mansobra que hará cuando sea seguro hacerla", "o": ["Sí, el usar las luces indicadoras de viraje le da a usted preferencia sobre los conductores que van en igual dirección a la suya", "Sí, y además de darle a usted preferencia le exime de cualquier responsabilidad", "No, porque usted sólo esta advirtiendo su Íntencion de realizar una mansobra que hará cuando sea seguro hacerla", "Sí, pero sólo en el caso que usted esté tratando de abandonar un estacionamiento al borde de la calzada"]}, {"q": "Usted se aproxima a un cruce cebra. En la vereda hay peatones esperando cruzar.¿Qué hace usted?", "a": "D:sminuye la velocidad y se prepara para detenerse", "o": ["D:sminuye la velocidad y se prepara para detenerse", "Da la pasada a los peatones sólo si éstos son ancianos o niños", "Usa sus luces para indicarles que pueden pasar", "Toca la bocina para indicarles que pueden cruzar"]}, {"q": "Usted conduce un vehículo de marcha lenta por un camino angosto y sinuoso. En estas circunstancias, usted debería", "a": "correrse hacia ta derecha cuando pueda hacer!c en forma segura, para permitir que otros lo adelanten", "o": ["circular cerca del centro de la calzada para evitar que otros lo adelanten peligrosamente", "correrse hacia ta derecha cuando pueda hacer!c en forma segura, para permitir que otros lo adelanten", "hacer indicaciones con la mano a los otros conductores cuando usted crea que podrán adelantarlo rápidamente", "señalizar con su intermitente derecho cuando adelantar no sea peligroso para los otros"]}, {"q": "Usted está circulando por una vía rápida en buenas condiciones.¿Cómo puede estar seguro de que lo hace a una distancia adecuada del vehículo que va adelante?", "a": "La distancia entre usted y e: vehicu:o que va adelante debería ser a lo menos igual a la que usted recorre en tres segundos", "o": ["La distancia entre usted y el vehículo que va adelante debería ser dos veces el largo de su vehículo", "La distancia entre usted y el vehículo que va adelante debería ser igual a su distancia de frenado", "La distancia entre usted y e: vehicu:o que va adelante debería ser a lo menos igual a la que usted recorre en tres segundos", "La distancia entre usted y el vehículo que va adelante debería ser a lo menos igual a la que usted recorre en un segundo"]}, {"q": "El conductor detrás de usted le sigue muy de cerca.¿Qué hace usted?", "a": "No hace nada y se mantiene dentro del limite de velocidad", "o": ["Señaliza a la derecha y le indica con lo mano para que lo adelante", "Disminuye la velocidad y le permite que lo adelante", "No hace nada y se mantiene dentro del limite de velocidad", "Se acerca hacia el centro de la calzada"]}, {"q": "Un bus está detenido en una parada delante suyo. El intermitente izquierdo del bus está parpadeando.¿Qué hace usted? €” , , y | | pa y 1 ar NA -| , y ) l A A A", "a": "Disminuye ta velocidad y cede el pase al bus. siempre que ello sea seguro", "o": ["Hace parpadear sus luces delanteras y disminuye la velocidad", "Toca la bocina y continúa", "Disminuye la velocidad y luego toca la bocina", "Disminuye ta velocidad y cede el pase al bus. siempre que ello sea seguro"]}, {"q": "Usted va conduciendo en una carretera a la velocidad máxima permitida. El conductor que viene detrás suyo está tratando de adelantarlo.¿Qué hace usted?", "a": "Mant:ene o disramuye la velocidad y permite el adelantamiento", "o": ["Se acerca más al vehículo de adelante para que el conductor que viene atrás no tenga espacio suficiente para el adelantamiento", "Le hace señas al conductor de atrás para que lo adelante, cuando sea seguro hacerlo", "Acelera para alejarse del conductor de atrás", "Mant:ene o disramuye la velocidad y permite el adelantamiento"]}, {"q": "Usted se está aproximando a un cruce cuando sorpresivamente un vehículo ingresa a la vía por la que usted va y se ubica delante suyo.¿Qué hace usted?", "a": "Disminuye la velocidad y esta atento para vetenerse", "o": ["Lo esquiva y toca la bocina", "Disminuye la velocidad y esta atento para vetenerse", "Enciende y apaga sus luces delanteras y continúa muy cerca detrás de él", "Acelera pasándolo inmediatamente"]}, {"q": "Usted va conduciendo a la velocidad máxima permitida. Un vehículo se acerca muy rápido por atrás encendiendo y apagando sus luces.¿Qué hace usted?", "a": "Le permite el adelantamiento", "o": ["Acelera para mantener un espacio adecuado detrás suyo", "Presiona su freno para mostrarle sus luces de freno", "Le permite el adelantamiento", "Aumenta su velocidad y le impide que lo adelante"]}, {"q": "Un espacio entre usted y el vehículo que marcha delante igual a lo que usted recorre en tres segundos es suficiente cuando", "a": "las condiciones climáticas son buenas", "o": ["las condiciones climáticas son buenas", "está lloviendo fuertemente", "recién ha cesado de llover", "hay neblina"]}, {"q": "Usted está conduciendo al límite de la velocidad máxima permitida y un conductor intenta adelantarlo.¿Trataría usted de evitar que lo adelante?", "a": "No, en ningún momento", "o": ["No, a menos que sea seguro hacerlo", "Sí, porque el otro conductor está actuando en forma peligrosa", "Sí, porque el otro conductor está infringiendo la ley", "No, en ningún momento"]}, {"q": "Usted está esperando poder incorporarse a una vía principal desde una calle lateral.¿Por qué razón debería usted poner especial atención a las motocicletas?", "a": "Porque las motocicietas son pequeñas y dific:les de ver", "o": ["Porque generalmente las motocicletas circulan más rápido que los autos", "Porque las patrullas de Carabineros suelen andar en motocicletas", "Porque las motocicietas son pequeñas y dific:les de ver", "Porque las motocicletas tienen el derecho preferente de paso"]}, {"q": "Enuna zona rural, usted va conduciendo por un camino muy angosto.¿Dónde le resultaría más difícil ver personas a caballo que avanzan delante suyo?", "a": "Al ir usted en una curva a la derecha", "o": ["Al ir usted bajando un cerro", "Al ir ellas subiendo un cerro Cc) Al ir usted en una curva a la izquierda", "Al ir usted en una curva a la derecha"]}, {"q": "Usted va detrás de un camión articulado que se aproxima a un cruce. Su conductor señaliza hacia la derecha, pero el vehículo se desplaza hacia la izquierda.¿Qué debe hacer usted? Y", "a": "Esperar detras de: camión", "o": ["Advertirle al conductor acerca de su señal equivocada", "Esperar detras de: camión", "Denunciar a Carabineros al conductor", "Pasar al camión por la derecha"]}, {"q": "En una carretera de doble calzada con 2 pistas por sentido de tránsito, usted desea pasar al vehículo que va delante suyo. Por su espejo retrovisor ve que el auto que viene atrás se está cambiando de pista para sobrepasarlo a usted.¿Qué debería hacer usted?", "a": "ho señal:zar hasta que el auto lo haya pasado", "o": ["Señalizar y luego cambiar de pista para sobrepasar", "Señalizar para indicarle al conductor que viene atrás que usted también desea sobrepasar", "Presionar levemente el pedal de frenos para mostrar sus luces de freno", "ho señal:zar hasta que el auto lo haya pasado"]}, {"q": "Un vehículo emerge sorpresivamente desde una vía lateral situándose delante suyo y obligándolo a frenar fuertemente.¿Qué hace usted?", "a": "Ignora el error y permanece calmado", "o": ["Enciende y apaga sus luces para manifestarle su enojo", "Ignora el error y permanece calmado", "Toca la bocina para demostrar su enojo", "Lo adelanta dejándolo atrás lo antes posible"]}, {"q": "Cuando el viento sopla muy fuertemente usted necesita tener especial cuidado", "a": "a: pasar cerca de cichstas", "o": ["al usar los frenos", "al comenzar a subir una pendiente", "al virar hacia un camino angosto", "a: pasar cerca de cichstas"]}, {"q": "¿Dónde debe tener usted especial cuidado con los motociclistas?", "a": "En los cruces de cales", "o": ["En una estación de servicio", "En los cruces de cales", "En las proximidades de un área de servicio", "Al ingresar a un recinto o área de estacionamientos"]}, {"q": "Cuando conduce en la ciudad¿por qué razón debería usted tener cuidado al cruzarse con un bus que se encuentra detenido en una parada?", "a": "Porque pueden aparecer peatones detras del bus", "o": ["Porque el bus puede estar en pana", "Porque el bus puede ponerse en movimiento repentinamente", "Porque pueden aparecer peatones detras del bus", "Porque el bus puede permanecer detenido"]}, {"q": "Usted se encuentra muy próximo a un cruce en el que pretende virar a la derecha. Delante suyo va un ciclista.¿Qué hace usted?", "a": "Se mantiene detras del ciclista hasta que este baya pasado ta interseccion", "o": ["Adelanta al ciclista antes del cruce", "Rodea al ciclista en el cruce", "Se mantiene detras del ciclista hasta que este baya pasado ta interseccion", "Se sitúa al lado del ciclista, sigue en línea recta y desiste de virar"]}, {"q": "Usted va conduciendo por un camino de doble tránsito cuando se encuentra con personas que van a caballo delante suyo.¿Qué es lo primero que usted debería hacer?", "a": "Prepararse para reducir a verocidad", "o": ["Desplazarse hacia el centro de la calzada", "Acelerar alrededor de ellos", "Señalizar hacia la izquierda", "Prepararse para reducir a verocidad"]}, {"q": "¿Cómo debería usted adelantar a personas que van a caballo?", "a": "Conduciendo lentamente y dejandc bastante espacto lateral", "o": ["Conduciendo lentamente y dejandc bastante espacto lateral", "Pasando cerca de ellas y adelantándolas lo antes posible", "La velocidad no es importante, pero sí el dejar suficiente espacio lateral", "Tocando la bocina sólo una vez como señal de advertencia"]}, {"q": "Usted va circulando a 65km/h aproximadamente cuando, lamentablemente, atropella a un peatón. A esa velocidad", "a": "es muy probabie que el peatón muera", "o": ["es seguro que el peatón morirá", "es muy probabie que el peatón muera", "es seguro que el peatón sobrevivirá", "es muy probable que el peatón sobreviva"]}, {"q": "Usted desea adelantar a un motociclista que va delante suyo,¿qué hace usted?", "a": "Le da tanto espacio lateral como ¡e daria a un automóvil", "o": ["Trata de pasarlo en una curva", "Pasa cerca de él y lo más rápido posible", "Le da tanto espacio lateral como ¡e daria a un automóvil", "Toca la bocina para advertir su presencia"]}, {"q": "Usted va siguiendo a un automóvil que es conducido por una persona de edad. Usted debería", "a": "estar consciente de que las reacciones del conductor pueden no ser tan rápidas como las suyas", "o": ["dar por seguro que el conductor manejará muy mal", "estar consciente de que las reacciones del conductor pueden no ser tan rápidas como las suyas", "encender y apagar sus luces y adelantarlo", "mantenerse cerca tras él y conducir cuidadosamente"]}, {"q": "Al estacionar su vehículo en un lugar en el que no hay señales que lo permitan ni que lo prohíban, usted no debe", "a": "obstacutizar el tránsito a otros usuarios de :a via", "o": ["dejar el freno de mano puesto", "detener el motor", "obstacutizar el tránsito a otros usuarios de :a via", "estacionar al costado derecho de la calzada"]}, {"q": "Cuando adelanta a un ciclista usted debe dejar el máximo espacio lateral posible.¿Por qué?", "a": "Porque e' c:clista podría desviarse bruscamente", "o": ["Porque el ciclista podría cambiar de pista", "Porque el ciclista podría bajarse de la bicicleta", "Porque el ciclista podría tener que virar a la izquierda", "Porque e' c:clista podría desviarse bruscamente"]}, {"q": "Cuando el viento está soplando muy fuerte,¿por qué debe usted dejar un espacio lateral extra al adelantar a un motociclista?", "a": "Porque e: motocictista podría tambalear o ver desviada su trayectoria a consecuenc»ra dei viento", "o": ["Porque el motociclista podría doblar repentinamente para escapar del viento", "Porque el motociclista podría detenerse repentinamente", "Porque e: motocictista podría tambalear o ver desviada su trayectoria a consecuenc»ra dei viento", "Porque el motociclista podría ir más rápido de lo normal"]}, {"q": "¿De qué le advierte esta señal?", "a": "Dela posbie presencia de escalares", "o": ["Dela posbie presencia de escalares", "De la proximidad de un cruce de peatones", "De la posible presencia de niños jugando", "De la proximidad de un parque o plaza"]}, {"q": "Por una carretera, usted circula detrás de otro vehículo. Si la calzada está mojada,¿qué espacio de tiempo mínimo mantiene usted respecto del vehículo que va adelante?", "a": "Alo menos, el equivalente a lo que recorre en 4 segundos", "o": ["Alo menos, el equivalente a lo que recorre en 4 segundos", "El equivalente a lo que recorre en 1 segundo", "El equivalente a lo que recorre en 2 segundos", "Como máximo, el equivalente a lo que recorre en 3 segundos"]}, {"q": "Usted está conduciendo de noche y es encandilado por las luces delanteras de un vehículo que se aproxima. En estas circunstancias,¿qué hace usted?", "a": "Reguce la velocidad o se detiene", "o": ["Reguce la velocidad o se detiene", "Cierra sus ojos", "Hace parpadear sus luces", "Baja la visera que tiene su vehículo para protegerlo del sol"]}, {"q": "Viajando de noche usted es encandilado por las luces de un vehículo que viene en sentido contrario,¿qué debería hacer usted?", "a": "Bajar ¡a verocidad y eventualmente detenerse", "o": ["Bajar su visor de protección solar", "Poner luces delanteras altas", "Poner su mano sobre sus ojos", "Bajar ¡a verocidad y eventualmente detenerse"]}, {"q": "Conduciendo de noche usted s e ve encandilado por las luces de un vehículo que viene en sentido contrario,¿qué debería hacer usted?", "a": "Bajar ta velocidad o detenerse", "o": ["Frenar fuerte", "Acelerar para alejarse rápido del vehículo que lo encandila", "Hacer parpadear sus luces", "Bajar ta velocidad o detenerse"]}, {"q": "Al frenar en una calzada mojada su vehículo comienza a patinar.¿Qué es lo primero que usted debería hacer?", "a": "Soltar el freno completamente", "o": ["Soltar el freno completamente", "Tirar rápidamente del freno de mano", "Apretar con más fuerza el pedal de freno", "Poner el pie en el pedal de embrague"]}, {"q": "¿Cómo puede usted evitar que los neumáticos patinen cuando la calzada está con hielo?", "a": "Conduciendo tentamente en la marcha mas alta posible", "o": ["Manteniéndose siempre en primera", "Poniendo el freno de mano si las ruedas comienzan a patinar", "Conduciendo tentamente en la marcha mas alta posible", "Conduciendo en neutro"]}, {"q": "Cuando la calzada está con hielo la distancia de frenado puede ser", "a": "10 veces la distancia normal", "o": ["2 veces la distancia normal", "5 veces la distancia normal", "7 veces la distancia normal", "10 veces la distancia normal"]}, {"q": "Al conducir con neblina a la luz del día,¿qué luces enciende usted?", "a": "Las luces delanteras bajas", "o": ["Las luces delanteras bajas", "Las luces de estacionamiento", "Las luces delanteras altas", "Las luces de advertencia de peligro"]}, {"q": "Al conducir sobre una calzada con hielo usted siente la dirección de su vehículo más liviana¿Por qué sucede esto?", "a": "Porque los neumáticos tienen menos adherencia a la calzada", "o": ["Porque los neumáticos tienen menos adherencia a la calzada", "Porque los neumáticos tienen más adherencia a la calzada", "Porque los neumáticos están demasiado blandos", "Porque los neumáticos están demasiado duros"]}, {"q": "¿Cuándo es su distancia de detención total mucho más larga?", "a": "Cuando esta licviendo", "o": ["Cuando hay neblina", "Cuando es de noche", "Cuando esta licviendo", "Cuando hay vientos fuertes"]}, {"q": "Usted acaba de conducir a través de una calle inundada.¿Qué es lo primero que debería hacer?", "a": "Chequear sus frenos", "o": ["Chequear sus frenos", "Detenerse y revisar sus neumáticos", "Detenerse y secar sus frenos", "Activar su limpiaparabrisas"]}, {"q": "¿Cómo puede usted evitar que su vehículo patine cuando la calzada está cubierta con una capa de hielo?", "a": "Conduciendo a una velocidad baja en el cambio más alto posible", "o": ["Usando el freno de mano si las ruedas comienzan a resbalar", "Conduciendo a una velocidad baja en el cambio más alto posible", "Frenando suave y repetidamente", "Conduciendo en un cambio bajo todo el tiempo"]}, {"q": "Usted está conduciendo bajo mucha lluvia y repentinamente siente la dirección muy liviana.¿Qué hace usted para tener nuevamente el control de su vehículo?", "a": "Suelta el acelerador", "o": ["Cambia a una marcha más baja", "Frena levemente para reducir la velocidad", "Guía el vehículo por la parte más seca de la calzada", "Suelta el acelerador"]}, {"q": "Cuando hay nieve lo mejor es conducir manteniéndose en la marcha más alta posible.¿Por qué es esto?", "a": "Para ayudar a evitar que las ruedas patinen", "o": ["Para reducir rápidamente la velocidad al frenar", "Para que el patinaje de las ruedas no haga que el motor funcione demasiado rápido", "Para ayudar a evitar que las ruedas patinen", "Para dejar disponible una marcha baja en el caso de que las ruedas patinen"]}, {"q": "¿Cuál es la principal razón por la cual su distancia de detención total es mayor después de una lluvia torrencial?", "a": "Porgue sus neumaticos tendrán menos adherencia sobre la calzada", "o": ["Porque puede que usted no vea las pozas grandes", "Porque los frenos estarán fríos al estar mojados", "Porgue sus neumaticos tendrán menos adherencia sobre la calzada", "Porque el agua sobre el parabrisas nublará su visión hacia el frente"]}, {"q": "En una ocasión de mucha neblina usted va detrás de otros vehículos y lleva encendidas sus luces bajas.¿De qué otra forma puede reducir las probabilidades de verse involucrado en un accidente?", "a": "Circutando a baja velocidad y aumentando ¡a distancia a! vehículo que va adelante", "o": ["Usando sus luces altas en vez de bajas", "Circutando a baja velocidad y aumentando ¡a distancia a! vehículo que va adelante", "Manteniéndose cerca del vehículo que va delante suyo", "Encendiendo sus luces de advertencia de peligro"]}, {"q": "¿Cómo puede usted controlar mejor su vehículo al conducir con nieve?", "a": "Congdunvendo lentamente en el carbio mas alte posible", "o": ["Conduciendo en un cambio bajo y sujetando el volante muy firmemente", "Conduciendo en primera", "Manteniendo el motor acelerado y presionando el pedal de embrague", "Congdunvendo lentamente en el carbio mas alte posible"]}, {"q": "Al ir de noche por una carretera usted debe mantener sus focos delanteros encendidos, a menos que", "a": "su vehículo esté en pana en ia berma", "o": ["su vehículo esté en pana en ia berma", "vayan vehículos muy cerca delante suyo", "circule a menos de 50 km/hr", "la carretera esté iluminada"]}, {"q": "¿Cómo debería conducir usted en una curva cuando hay hielo en la calzada?", "a": "Lenta y suavemente", "o": ["Usando el embrague y el freno al mismo tiempo", "Lenta y suavemente", "En primera", "Frenando a medida que va tomando la curva"]}, {"q": "Hay mucha neblina y el auto que viene detrás suyo parece estar muy cerca.¿Qué debería hacer usted?", "a": "Continuar con mucho cuidado", "o": ["Encender sus luces de advertencia de peligro", "Desplazarse hacia el costado derecho y detenerse de inmediato", "Acelerar y alejarse de él", "Continuar con mucho cuidado"]}, {"q": "Usted va conduciendo de noche por una carretera cerca de otros vehículos que van delante suyo.¿Qué luces debería mantener encendidas?", "a": "Las luces bajas", "o": ["Las neblineras delanteras", "Las luces altas", "Las luces bajas", "Las luces de estacionamiento"]}, {"q": "¿Por qué razón debería usted reducir siempre su velocidad al conducir con neblina?", "a": "Porque es mas difici! ver lo que hay mas ade'ante", "o": ["Porque los frenos no funcionan bien", "Porque las luces neblineras de otros lo pueden encandilar", "Porque es mas difici! ver lo que hay mas ade'ante", "Porque el motor está más frío"]}, {"q": "Su vehículo ha quedado en pana en medio de una autopista.¿Qué es lo primero que usted debería hacer?", "a": "Encender sus luces de advertencia de peligro", "o": ["Intentar detener a los autos que pasan para solicitar ayuda", "Intentar reparar su vehículo rápidamente", "Encender sus luces de advertencia de peligro", "Instalar un triángulo reflectante para advertir a los demás usuarios"]}, {"q": "Usted va circulando por la pista de la derecha de una carretera de doble calzada muy transitada. Una señal le indica que a 800 m su pista se encuentra cerrada¿Qué debería hacer usted?", "a": "Desp:azarse hacia la pista de su :2quierda tan pronto pueda hacerlo en forma segura", "o": ["Señalizar a la izquierda, luego detenerse y esperar a que alguien le dé la pasada", "Encender sus luces de advertencia de peligro y desplazarse hacia la pista de su izquierda", "Continuar hasta llegar a la obstrucción y luego se cambia hacia la pista de la izquierda", "Desp:azarse hacia la pista de su :2quierda tan pronto pueda hacerlo en forma segura"]}, {"q": "En una calle de una pista por sentido de tránsito usted se encuentra con que su pista está obstruida", "a": "Cede el paso al tránsito que viene en sentido contrario", "o": ["Continúa, porque usted tiene el derecho a vía", "Hace señas con la mano a quienes vienen en contra para que le den la pasada", "Cede el paso al tránsito que viene en sentido contrario", "Acelera para poder pasar primero"]}, {"q": "Usted va tirando un remolque pequeño que comienza a zigzaguear¿Qué hace usted?", "a": "Retira suavemente el pie del acelerador y disminuye ta velocidad", "o": ["Frena a fondo y mantiene la presión sobre el pedal de freno", "Aumenta su velocidad tan pronto sea posible", "Suelta ligeramente el volante y espera que el problema se corrija solo", "Retira suavemente el pie del acelerador y disminuye ta velocidad"]}, {"q": "¿Cómo puede usted detener el zigzagueo de una casa rodante que va remolcando?", "a": "Disminuyendo la velocidad gradualmente", "o": ["Moviendo el volante lentamente hacia cada lado", "Acelerando para aumentar la velocidad", "Disminuyendo la velocidad gradualmente", "Deteniéndose lo más rápido que pueda"]}, {"q": "¿Qué precaución debe tomar usted al cargar un remolque que va a arrastrar con su automóvil?", "a": "Que el peso se d:stribuya en forma pareja", "o": ["Que el mayor peso se concentre en la parte trasera", "Que la mayor parte del peso se concentre en la parte delantera", "Que el peso se d:stribuya en forma pareja", "Que el peso se concentre al lado derecho"]}, {"q": "En una carretera de doble calzada y de mucho tránsito, usted está siendo seguido muy de cerca por un vehículo que viene atrás.¿Qué hace usted para disminuir el riesgo de accidente?", "a": "Aumenta su distanc.a a: vehículo que va adelante", "o": ["Sale a la berma y se detiene", "Enciende sus luces de advertencia de peligro", "Frena", "Aumenta su distanc.a a: vehículo que va adelante"]}, {"q": "¿Qué significa esta señal?", "a": "Usted no debe exceder ¡a velocidad mdaicada", "o": ["Usted no debe exceder ¡a velocidad mdaicada", "Es más seguro conducir a la velocidad indicada", "La velocidad indicada es la máxima aconsejada", "Es una recomendación para cuando hay mucho tránsito"]}, {"q": "¿Cuándo puede usted ingresar a un cruce en cuya calzada se han pintado franjas amarillas diagonales?", "a": "Cuando en ía sahda del cruce tenga espacio suficiente como para no quedar detensólo en el", "o": ["Siempre que el semáforo esté en verde", "Cuando en ía sahda del cruce tenga espacio suficiente como para no quedar detensólo en el", "Cada vez que va a virar hacia la derecha", "Sólo cuando haya menos de dos vehículos delante suyo"]}, {"q": "¿Qué significa esta señal de tránsito?", "a": "Pavimento resbalad:zo", "o": ["Gravilla suelta", "Peligro de que se pinchen los neumáticos", "Pavimento resbalad:zo", "Curvas en el camino"]}, {"q": "¿Qué debe hacer usted cuando enfrenta esta señal?", "a": "Detenerse siempre", "o": ["Detenerse sólo si viene algún vehículo por la otra vía", "Detenerse sólo si hay peatones esperando para cruzar", "Detenerse sólo si en la calzada está pintada la leyenda PARE", "Detenerse siempre"]}, {"q": "¿Para qué sirven las señales amarillas con forma de rombo?", "a": "Para advertir acerca de peugros", "o": ["Para entregar información", "Para dar órdenes", "Para indicar direcciones", "Para advertir acerca de peugros"]}, {"q": "Usted está enfrentando un semáforo en amarillo.¿Qué luces se encenderán después?", "a": "Primero !a roja y luego la verde", "o": ["Primero la roja y luego la amarilla nuevamente", "Primero !a roja y luego la verde", "Primero la verde y luego la roja", "Primero la verde y luego la amarilla nuevamente"]}, {"q": "¿Qué significa la demarcación de centro de calzada que muestra la figura? DS a Y Ai h 20 Y DN EN PA p A o, q SN ci e O DO da? E: AR ' MER de Vi » EA nes po La ses A y A AR 44 í SE > RS AOS o ON nl a? ACAMS AAA Ss", "a": "Que no puede ser traspasada por un conductor que va por ja pista B", "o": ["Que no puede ser traspasada por un conductor que viene por la pista A", "Que no puede ser traspasada por un conductor que va por ja pista B", "Que en ningún caso pueden efectuarse adelantamientos", "Que sólo un conductor que va por la pista B podría efectuar un adelantamiento"]}, {"q": "El vehículo indicado con la flecha se encuentra detenido sobre una zona achurada esperando poder efectuar un viraje en U,¿es esto correcto? eS a | a a -", "a": "No. porque los vehículos no pueder detenerse m circular por zonas achuradas", "o": ["Sí, la zona achurada sólo separa sentidos de circulación", "Sí, siempre que la zona achurada no esté reforzada con tachas o tachones reflectantes", "No. porque los vehículos no pueder detenerse m circular por zonas achuradas", "No, porque se trata de una vía de mucho tránsito"]}, {"q": "¿Qué le indica la señal de tránsito que se observa en la fotografía? Ñ PEN - : ib y e 2 A > 7", "a": "Que usted esta obhgado a ceder el paso a los vehículos que se aproximen por ¡a Otra via", "o": ["Que usted está obligado a detenerse a la altura de la señal", "Advierte que el cruce al que usted se aproxima es peligroso", "Que usted esta obhgado a ceder el paso a los vehículos que se aproximen por ¡a Otra via", "Es sólo una recomendación para que usted ponga especial atención al pasar el cruce"]}, {"q": "¿Qué significa la luz verde del semáforo?", "a": "Siga. perc soto si Su pista esta expedita justo despues de: cruce", "o": ["Siga tan pronto aparezca la luz verde", "Siga. perc soto si Su pista esta expedita justo despues de: cruce", "Siga después de mirar hacia ambos lados", "Siga"]}, {"q": "Usted se ve involucrado en un accidente. Un pasajero del otro vehículo ha resultado con lesiones leves.¿Debe usted informar el hecho a la policía?", "a": "$: debe dar cuenta del hecho a la autoridad policia) mas inmediata a la brevedad", "o": ["Sí, debe dar cuenta del hecho a la policía dentro de los próximos 20 días", "No, el pasajero lesionado debe decidir si se informa a la policía o no", "No, los accidentes en que sólo resultan lesionados leves no se informan a la policía", "$: debe dar cuenta del hecho a la autoridad policia) mas inmediata a la brevedad"]}, {"q": "Usted se ha detenido en el lugar de un accidente para prestar ayuda.¿Qué debería hacer usted? Marque tres respuestas", "a": "Mantener abrigadas y cómodas a las personas heridas", "o": ["Mantener a las personas lesionadas en movimiento haciéndolas caminar", "Dar a las personas heridas algo caliente para beber", "Mantener abrigadas y cómodas a las personas heridas"]}, {"q": "Usted llega al lugar de un accidente en el que participó un camión cargado con productos químicos peligrosos.¿Qué debería hacer usted antes de llamar al 133 de Carabineros?", "a": "Averiguar de que clase de producto quimico se trata mirando los rotulos y letreros que tiene el camión", "o": ["Tratar de mover el camión", "Tratar de diluir los productos químicos con agua", "Averiguar de que clase de producto quimico se trata mirando los rotulos y letreros que tiene el camión", "Tratar de evitar que los productos químicos se sigan derramando"]}, {"q": "Usted llega al lugar de un accidente en el que ha participado un motociclista. El motociclista yace consciente, pero en estado de shock.¿De qué debería asegurarse usted?", "a": "Que e? motociclista no se Saque et casco", "o": ["Que el motociclista se saque el casco", "Que e? motociclista no se Saque et casco", "Que al motociclista se le ayude a ponerse de pie", "Que al motociclista se le dé algo para beber"]}, {"q": "Usted va por una autopista. De un camión cargado que va delante suyo cae una caja sin que su conductor se dé cuenta.¿Qué hace usted?", "a": "Continua hasta donde haya un tetéefono para avisar a la policia o a los servicios de emergertia", "o": ["Trata de alcanzar al camión y de llamar la atención de su conductor", "Se detiene junto a la caja y enciende sus luces de emergencia hasta que llegue la policía", "Se desplaza hacia la berma y luego intenta recoger la caja", "Continua hasta donde haya un tetéefono para avisar a la policia o a los servicios de emergertia"]}, {"q": "¿Quién o quiénes están cubiertos por el Seguro Obligatorio de Accidentes Personales?", "a": "El conductor, los pasajeros y Cualquier tercero afectado en un accidente de transito en que participe el vehículo asegurado", "o": ["Sólo el conductor del vehículo asegurado", "Sólo los pasajeros del vehículo asegurado", "Sólo los pasajeros y el conductor del vehículo asegurado", "El conductor, los pasajeros y Cualquier tercero afectado en un accidente de transito en que participe el vehículo asegurado"]}, {"q": "¿Qué documento no está obligado a portar usted siempre en su vehículo?", "a": "El certificado de inscripcion en el Registro Nacional de Vehículos Motorizados", "o": ["El Permiso de Circulación", "El certificado de un Seguro Obligatorio de Accidentes Personales", "Su licencia de conductor", "El certificado de revisión técnica o de homologación", "El certificado de inscripcion en el Registro Nacional de Vehículos Motorizados"]}, {"q": "¿Una persona puede conducir un vehículo bajo las influencias del alcohol?", "a": "Nunca", "o": ["Luego de 20 minutos puede conducir su vehículo", "Nunca", "Solo si puede conducir"]}, {"q": "¿Qué significa cuando nos referimos a conducir a la defensiva?", "a": "Tomar en cuenta¿os posibles errores de¿os otros conductores", "o": ["Frenar antes en cada cruce", "Conducir violentamente", "Tomar en cuenta¿os posibles errores de¿os otros conductores"]}, {"q": "Velocidad razonable y prudente significa", "a": "Una velocdad que permita controlar el vehículo cuando sea necesar!o. para evitar acudentes", "o": ["30 km/h", "50 km/h", "La máxima permitida en la vía", "Una velocdad que permita controlar el vehículo cuando sea necesar!o. para evitar acudentes"]}, {"q": "Debe considerarse como velocidad razonable y prudente la que contemple", "a": "los mesgos y pehgros presentes y posibles", "o": ["los mesgos y pehgros presentes y posibles", "Solo el estado del camino", "La temperatura ambiente"]}, {"q": "¿Cuál de los siguientes efectos que presenta un individuo NO puede ser producto del consumo de drogas?", "a": "Mejoría permanente del rendimiento mental", "o": ["Mejoría permanente del rendimiento mental", "Aumento del tiempo de reacción", "Sobrevaloración de las capacidades"]}, {"q": "Según el libro del nuevo conductor¿Cuáles son los valores que nos transmite la educación vial?", "a": "Respeto. solidaridad, comprension y tolerancia", "o": ["Respeto solo hacia uno mismo, destreza en el manejo del vehículo y cumplimiento de las normas del transito", "La valentía, el arrojo, la temeridad", "Respeto. solidaridad, comprension y tolerancia"]}, {"q": "Una de las claves para la convivencia vial es", "a": "Ser considerado y amabie con los demas usuarios de la via", "o": ["Siempre detenerse en un semáforo, aunque la luz este en verde", "Ser considerado y amabie con los demas usuarios de la via", "Evitar conducir de noche"]}, {"q": "El alcohol en el organismo tiene las siguientes consecuencias negativas", "a": "Perturba el estadc de animo", "o": ["Hace más rápida la comunicación", "Perturba el estadc de animo", "Influye positivamente en el tiempo de reacción"]}, {"q": "La ley actual de tránsito prohíbe que viajen en los asientos delanteros los niños de", "a": "Menos de 12 años", "o": ["Menores de 2 años", "Menores de 8 años", "Menores de 4 años", "Menos de 12 años"]}, {"q": "¿Cómo se selecciona el sistema de retención infantil (SRI) de un niño?", "a": "Peso, altura y edad del niño", "o": ["Altura y edad del niño", "Peso, altura y sexo del niño", "Peso, altura y edad del niño"]}, {"q": "Si el sistema de retención infantil ha participado en un accidente de tránsito¿Puede ser utilizada nuevamente?", "a": "No, no puede ser utilizada nuevamente", "o": ["No, no puede ser utilizada nuevamente", "Si, solamente si usted la repara", "Si, solo para viajes que duren menos de 1 hora"]}, {"q": "Estadísticamente, la mayor cantidad de niños atropellados son varones entre", "a": "4 y 10 años. que .rrumpen sorpres:vamente en la calzada", "o": ["4 y 10 años. que .rrumpen sorpres:vamente en la calzada", "4 y 8 años, que irrumpen sorpresivamente en la calzada", "8 y 10 años, que irrumpen sorpresivamente en la calzada"]}, {"q": "¿Cuán mayor puede ser el riesgo de accidente para un conductor que presenta una tasa de alcohol en la sangre entre 0,3 y 0,5 GR/L?", "a": "E) riesgo de acoidente cor esa cantidad de alcohol en ¡a sangre es el doble que s: no hub:era bebido", "o": ["No hay riesgo de accidente porque esa cantidad no afecta en los sentidos de la persona para conducir", "El riesgo de accidente con esa cantidad de alcohol en la sangre es 5 veces más que si no hubiera bebido", "E) riesgo de acoidente cor esa cantidad de alcohol en ¡a sangre es el doble que s: no hub:era bebido"]}, {"q": "¿Qué sucede con el alcohol mezclado con bebidas carbonatadas?", "a": "Pasa mas rapidc a la sangre", "o": ["No produce ningún efecto", "Pasa mas rapidc a la sangre", "Pasa más lento a la sangre"]}, {"q": "Normalmente se tiene un campo visual de algo más de con la visión periférica Ponternica ú Perifosica MITA Vieón", "a": "1802", "o": ["3602", "1802", "1002"]}, {"q": "Se entiende que un conductor está bajo la influencia del alcohol cuando este presenta una concentración di o Sa K¿e A AS ñ Ly h y AY | E LM", "a": "Mayor a0,31 e mferior a 0,79 gramos por mi! de alcoho: en ta sangre", "o": ["Mayor a0,31 e mferior a 0,79 gramos por mi! de alcoho: en ta sangre", "Mayor a 0,1 e inferior a 0,5 gramos por mil de alcohol en la sangre", "Mayor a 0,3 por mil de alcohol en la sangre", "Mayor a 1,0 e inferior a 1,5 gramos por mil de alcohol en la sangre"]}, {"q": "Se sanciona con cárcel efectiva de al menos __a los conductores en estado de ebriedad que generen lesiones graves, gravísimas o la muerte", "a": "Un año", "o": ["Un mes", "Un año", "90 días", "180 días"]}, {"q": "¿Qué es la alcoholemia? h o L o 'OHOLEMIA MN | + ) l e", "a": "Es el analisis de una muestra de sangre que detecta la tasa (concentración) de alcohoi que posee una persona", "o": ["Es el analisis de una muestra de sangre que detecta la tasa (concentración) de alcohoi que posee una persona", "Es una prueba que mide la concentración de alcohol en el cerebro", "Mide cuanto alcohol posee una persona en el estomago"]}, {"q": "La presión en grupo puede traer como consecuencia efectos f q 1¿E Al / 0 4 A A 2 SE A", "a": "Negativos y positivos", "o": ["Negativos", "Positivos", "Negativos y positivos"]}, {"q": "¿El seguro obligatorio en el caso de vehículos particulares y motocicletas se pagara anualmente en el mes de? | pl E | enes dereros informate [Tienes derechos EZ 4 £ manejatel sE SYS, 5", "a": "Marzo", "o": ["Diciembre", "Enero", "Marzo", "Septiembre"]}, {"q": "Si su vehículo cuenta con placa patente terminada en digito 6, la revisión técnica será en el mes de lore a E mE, AN +9 En 7 ue <> 5 AUTE, ce bas El 4 Bl, 7 A", "a": "Septiembre", "o": ["Septiembre", "Enero", "Diciembre", "Abril"]}];
+OFI.forEach(x=>CARDS.push({c:"ofi",d:2,q:x.q,a:x.a,o:x.o}));
+
+/* Examen: o[0] es la correcta (se barajan al mostrar). d = dificultad */
+const QUIZ = [
+  {c:"dist",d:2,q:`Va a 80 km/h. ¿Qué distancia recorre desde que se percata de un peligro hasta que empieza a frenar?`,o:["Unos 24 metros","Unos 50 metros","Unos 15 metros"]},
+  {c:"alc",d:1,q:`¿En cuánto tiempo se detecta el alcohol en la sangre tras ingerirlo?`,o:["A los 5 minutos","A los 30 minutos","A la hora"]},
+  {c:"alc",d:1,q:`¿Cuándo alcanza el alcohol su nivel máximo en sangre?`,o:["1 hora después","30 minutos después","Inmediatamente"]},
+  {c:"vis",d:1,q:`¿Cuántos grados abarca la visión periférica?`,o:["180 grados","90 grados","360 grados"]},
+  {c:"norm",d:1,q:`Velocidad máxima en zona urbana:`,o:["50 km/h","60 km/h","40 km/h"]},
+  {c:"norm",d:1,q:`Velocidad máxima en zona de colegios:`,o:["30 km/h","20 km/h","40 km/h"]},
+  {c:"norm",d:1,q:`Velocidad máxima en autopista:`,o:["120 km/h","100 km/h","140 km/h"]},
+  {c:"norm",d:2,q:`Velocidad máxima en zona rural (una pista por sentido):`,o:["100 km/h","120 km/h","90 km/h"]},
+  {c:"veh",d:1,q:`Profundidad mínima legal de la banda de rodadura en Chile:`,o:["1,6 mm","3 mm","1 mm"]},
+  {c:"sen",d:1,q:`¿Qué indica la luz roja intermitente del semáforo?`,o:["Ceda el paso","Detención total","Avanzar con precaución"]},
+  {c:"veh",d:1,q:`¿Qué hace el sistema ABS?`,o:["Evita el bloqueo de las ruedas y mantiene el control de la dirección","Aumenta la potencia del motor","Reduce el consumo de combustible"]},
+  {c:"alc",d:1,q:`¿Cuál es la tasa segura de alcohol para conducir?`,o:["0,0 g/L","0,3 g/L","0,5 g/L"]},
+  {c:"seg",d:2,q:`La separación máxima entre la cabeza y el apoyacabezas debe ser:`,o:["Nunca superior a 4 cm","Nunca superior a 10 cm","No importa la distancia"]},
+  {c:"seg",d:2,q:`Un choque a 50 km/h sin cinturón equivale a caer de:`,o:["Un 4° piso","Un 7° piso","Un 2° piso"]},
+  {c:"vul",d:1,q:`¿Qué distancia lateral hay que dejar al adelantar a un ciclista?`,o:["1,5 metros","1 metro","0,5 metros"]},
+  {c:"norm",d:2,q:`¿A qué distancia de una curva o puente está prohibido virar en U?`,o:["A menos de 200 metros","A menos de 100 metros","A menos de 50 metros"]},
+  {c:"norm",d:1,q:`¿Con cuánta anticipación debes señalizar un viraje?`,o:["Al menos 30 metros antes","Al menos 10 metros antes","Al menos 50 metros antes"]},
+  {c:"veh",d:2,q:`¿Cómo se limpian los bornes sulfatados de la batería?`,o:["Con agua y bicarbonato","Con bencina","Con aceite"]},
+  {c:"veh",d:3,q:`¿Dónde va situado el termostato de un motor?`,o:["En el bloque motor, en la salida del líquido hacia el radiador","En el tubo de escape","Junto a la batería"]},
+  {c:"norm",d:2,q:`¿Cuántas personas se pueden transportar en Clase B?`,o:["Hasta 9 personas","Hasta 5 personas","Hasta 12 personas"]},
+  {c:"seg",d:1,q:`¿Desde qué año es obligatorio el cinturón en los asientos traseros?`,o:["2002","2010","1995"]},
+  {c:"veh",d:2,q:`¿Qué función cumple el carburador?`,o:["Mezcla exacta del aire con el combustible","Enfría el motor","Carga la batería"]},
+  {c:"norm",d:1,q:`En una intersección sin señales, tiene preferencia:`,o:["El vehículo que viene por la derecha","El vehículo que viene por la izquierda","El más rápido"]},
+  {c:"norm",d:2,q:`En una rotonda, tienen preferencia:`,o:["Los vehículos que ya están dentro","Los que van a entrar","Los que vienen por la derecha"]},
+  {c:"dist",d:1,q:`La distancia de FRENADO se calcula:`,o:["Primer dígito de la velocidad × 5","Primer dígito × 3","Primer dígito × 2"]},
+  {c:"dist",d:1,q:`La distancia de REACCIÓN se calcula:`,o:["Primer dígito de la velocidad × 3","Primer dígito × 5","Primer dígito × 10"]},
+  {c:"alc",d:2,q:`Con alcoholemia entre 0,5 y 0,8 g/L, el riesgo de siniestro es:`,o:["Cinco veces más","El doble","El triple"]},
+  {c:"med",d:3,q:`Conducir con antihistamínicos con somnolencia equivale a manejar con:`,o:["0,5 - 0,8 g/L de alcohol","0,1 g/L de alcohol","Sin efecto alguno"]},
+  {c:"norm",d:2,q:`¿Qué luces se deben usar con niebla intensa?`,o:["Luces bajas y antiniebla","Luces altas","Solo las de emergencia"]},
+  {c:"norm",d:2,q:`¿Cuánto deben permitir ver las luces bajas?`,o:["No menos de 50 metros","No menos de 150 metros","No menos de 20 metros"]},
+  {c:"norm",d:2,q:`¿Cuánto deben permitir ver las luces altas?`,o:["Mínimo 150 metros","Mínimo 50 metros","Mínimo 100 metros"]},
+  {c:"norm",d:1,q:`La secuencia correcta del RCP es:`,o:["30 compresiones y 2 respiraciones","15 compresiones y 2 respiraciones","30 compresiones y 5 respiraciones"]},
+  {c:"veh",d:1,q:`El freno de mano (estacionamiento) actúa en:`,o:["Las ruedas traseras","Las 4 ruedas","Las ruedas delanteras"]},
+  {c:"norm",d:2,q:`La fuerza centrífuga en una curva:`,o:["Tiende a sacar el vehículo de la carretera","Empuja el vehículo hacia el centro","Aumenta con el viento"]},
+  {c:"stat",d:2,q:`¿Qué accidente origina la mayor cantidad de muertos?`,o:["Los atropellos","Las colisiones frontales","Los volcamientos"]},
+  {c:"dist",d:2,q:`Si duplicas la velocidad, la distancia de frenado:`,o:["Se multiplica por 4","Se multiplica por 2","Se mantiene igual"]},
+  {c:"stat",d:1,q:`¿En qué % de los siniestros está presente la falla humana?`,o:["Más del 90%","50%","30%"]},
+  {c:"vul",d:2,q:`¿Hasta qué edad debe viajar un niño a contramarcha como mínimo?`,o:["Hasta los 2 años","Hasta los 5 años","Hasta el año"]},
+  {c:"vul",d:1,q:`¿Desde qué edad pueden ir los niños en el asiento delantero?`,o:["Desde los 12 años","Desde los 8 años","Desde los 10 años"]},
+  {c:"seg",d:2,q:`¿Cuánto reduce el airbag (junto al cinturón) las lesiones mortales?`,o:["Hasta un 20%","Hasta un 50%","Hasta un 5%"]},
+  {c:"norm",d:2,q:`¿A qué distancia de la cuneta debes estacionar?`,o:["A no más de 30 cm","A no más de 60 cm","A no más de 1 metro"]},
+  {c:"norm",d:2,q:`Conduciendo bajo la lluvia, la distancia con el de adelante debe ser:`,o:["El doble que en condiciones normales","La misma de siempre","La mitad"]},
+  {c:"sen",d:2,q:`¿De qué color son las señales transitorias (trabajos en la vía)?`,o:["Naranja","Amarillo","Azul"]},
+  {c:"veh",d:2,q:`¿Cuál es la profundidad mínima recomendada de la banda de rodadura?`,o:["3 mm","1,6 mm","5 mm"]},
+  {c:"norm",d:3,q:`¿Cuánto recorre un tren para detenerse?`,o:["Entre 800 y 1000 metros","Entre 200 y 400 metros","Unos 100 metros"]}
+];
+
+const TRUCOS = [
+  {i:"📐",t:"La fórmula mágica de las distancias",h:`Reacción = <code>1er dígito × 3</code> · Frenado = <code>1er dígito × 5</code> · Total = la suma. Ej: a 80 → 24 + 40 = <b>64 m</b>. Solo necesitas multiplicar por 3 y por 5.`},
+  {i:"🏢",t:"Los pisos del choque (sin cinturón)",h:`<code>50 km/h = 4° piso</code> · <code>70 km/h = 7° piso</code> · <code>90 km/h = piso 11</code>. El número del piso sube con la velocidad.`},
+  {i:"👁️",t:"180° SIEMPRE",h:`La visión periférica es de <b>180 grados</b>. Aparece en muchísimas preguntas (alcohol, percepción, motor). Tatúatela.`},
+  {i:"🚦",t:"Velocidades, de menor a mayor",h:`Colegio <code>30</code> · Urbana <code>50</code> · Rural <code>100</code> (120 si 2+ pistas) · Autopista <code>120</code>.`},
+  {i:"🛞",t:"Neumáticos: dos números",h:`<code>1,6 mm</code> = mínimo legal en Chile · <code>3 mm</code> = recomendado. El aquaplaning aumenta bajo 1,6 mm.`},
+  {i:"🍷",t:"Alcohol en el tiempo",h:`Se detecta a los <code>5 min</code> · Máximo a la <code>1 hora</code> · Se elimina a <code>0,1–0,15 g/L por hora</code>. Tasa segura: <b>0,0</b>.`},
+  {i:"📏",t:"Distancias clave en metros",h:`Señalizar viraje <code>30 m</code> · Virar en U prohibido a <code>menos de 200 m</code> de curva/puente · Triángulos <code>50 m</code> carretera / <code>10 m</code> ciudad · Tren <code>800–1000 m</code>.`},
+  {i:"🪑",t:"Apoyacabezas y ciclista",h:`Apoyacabezas: máximo <code>4 cm</code> de separación con la cabeza. Adelantar ciclista: <code>1,5 m</code> de distancia lateral.`},
+  {i:"🅿️",t:"Estacionar",h:`<code>30 cm</code> de la cuneta · <code>60 cm</code> de otros autos.`},
+  {i:"❤️",t:"RCP y rojo intermitente",h:`RCP = <code>30 compresiones + 2 respiraciones</code>. Luz roja intermitente = <b>Ceda el paso</b> (mata dos preguntas a la vez).`},
+  {i:"⚖️",t:"Doble puntaje: aprende sí o sí",h:`Las preguntas de <b>alcohol</b> y de <b>sistema de retención infantil (SRI)</b> suelen valer doble. Prioriza esas categorías.`},
+  {i:"🔧",t:"Motor en una línea",h:`Bornes sulfatados → <b>agua con bicarbonato</b>. Carburador → mezcla aire+combustible. Termostato → bloque motor, salida hacia el radiador. La batería <b>no</b> alimenta al alternador.`}
+];
+
+/* ===================== STORAGE ===================== */
+const store = {
+  mem:{}, ok:false,
+  init(){ try{ this.ok=(typeof window!=="undefined" && !!window.storage); }catch(e){ this.ok=false; } },
+  async load(k,d){ if(this.ok){ try{ const r=await window.storage.get(k); return r?JSON.parse(r.value):d; }catch(e){ return d; } } return (k in this.mem)?this.mem[k]:d; },
+  async save(k,v){ if(this.ok){ try{ await window.storage.set(k,JSON.stringify(v)); }catch(e){} } else { this.mem[k]=v; } }
+};
+let boxes={}, history=[], streak={last:null,count:0};
+
+/* ===================== NAV ===================== */
+function go(s){
+  stopAudio();
+  document.querySelectorAll(".screen").forEach(v=>v.classList.remove("on"));
+  document.getElementById("s-"+s).classList.add("on");
+  document.querySelectorAll("nav.tabbar button").forEach(b=>b.classList.toggle("on",b.dataset.s===s));
+  if(s==="study"){ closeStudy(); }
+  if(s==="exam"){ showExamConfig(); }
+  document.querySelector("main").scrollTop=0;
+}
+
+/* ===================== HOME ===================== */
+function refreshHome(){
+  const dom = CARDS.filter((_,i)=>(boxes[i]||0)>=4).length;
+  const pct = Math.round(dom/CARDS.length*100);
+  document.getElementById("ring").style.setProperty("--p",pct);
+  document.getElementById("ringTxt").textContent=pct+"%";
+  document.getElementById("topMastery").textContent=pct+"%";
+  document.getElementById("homeDom").textContent=`${dom} de ${CARDS.length} tarjetas dominadas`;
+  document.getElementById("stStreak").textContent=streak.count||0;
+  document.getElementById("stExams").textContent=history.length;
+  const best = history.length?Math.max.apply(null,history.map(h=>h.pct)):null;
+  document.getElementById("stBest").textContent = best===null?"—":best+"%";
+}
+
+/* ===================== ESTUDIAR ===================== */
+let studyDiff="all", studyCat="all", deck=[], curIdx=0, lastIdx=-1, flipped=false;
+
+function diffChipsHTML(active){
+  let h=`<button class="chip ${active==='all'?'on':''}" onclick="setDiff('all')">Todas</button>`;
+  for(const d of [1,2,3]) h+=`<button class="chip d${d} ${active==String(d)?'on':''}" onclick="setDiff('${d}')">${DIFF[d].n}</button>`;
+  return h;
+}
+function setDiff(d){ studyDiff=d; renderStudyChips(); if(document.getElementById("studyCard").style.display!=="none"){ buildDeck(); pickNext(); } else { renderCatList(); } }
+function renderStudyChips(){
+  document.getElementById("studyChips").innerHTML=diffChipsHTML(studyDiff);
+  document.getElementById("studyChips2").innerHTML=diffChipsHTML(studyDiff);
+}
+function matchDiff(d){ return studyDiff==="all" || String(d)===studyDiff; }
+function renderCatList(){
+  // todas
+  const allCards=CARDS.map((c,i)=>i).filter(i=>matchDiff(CARDS[i].d));
+  const allDom=allCards.filter(i=>(boxes[i]||0)>=4).length;
+  document.getElementById("allBar").style.width=(allCards.length?Math.round(allDom/allCards.length*100):0)+"%";
+  document.getElementById("allCount").textContent=allDom+"/"+allCards.length;
+  let html="";
+  for(const k in CATS){
+    const idxs=CARDS.map((c,i)=>i).filter(i=>CARDS[i].c===k && matchDiff(CARDS[i].d));
+    if(!idxs.length) continue;
+    const dom=idxs.filter(i=>(boxes[i]||0)>=4).length;
+    const pct=Math.round(dom/idxs.length*100);
+    html+=`<button class="cat" onclick="openStudy('${k}')">
+      <span class="cic" style="background:${CATS[k].c}">${CATS[k].i}</span>
+      <span class="cmid"><span class="cnm">${CATS[k].n}</span>
+        <span class="cpb"><i style="width:${pct}%"></i></span></span>
+      <span class="ccount">${dom}/${idxs.length}</span></button>`;
+  }
+  document.getElementById("catList").innerHTML=html;
+}
+function openStudy(cat){
+  studyCat=cat;
+  document.getElementById("studyList").style.display="none";
+  document.getElementById("studyCard").style.display="block";
+  const name = cat==="all"?"Todas las categorías":CATS[cat].n;
+  document.getElementById("studyTitle").childNodes[0].nodeValue="Tarjetas · ";
+  document.getElementById("studyTitle").querySelector("small").textContent=name;
+  renderStudyChips();
+  buildDeck(); pickNext();
+  document.querySelector("main").scrollTop=0;
+}
+function closeStudy(){
+  stopAudio();
+  document.getElementById("studyCard").style.display="none";
+  document.getElementById("studyList").style.display="block";
+  renderStudyChips(); renderCatList();
+}
+function buildDeck(){
+  deck=CARDS.map((c,i)=>i).filter(i=>(studyCat==="all"||CARDS[i].c===studyCat) && matchDiff(CARDS[i].d));
+  if(!deck.length) deck=CARDS.map((c,i)=>i).filter(i=>(studyCat==="all"||CARDS[i].c===studyCat));
+}
+function pickNext(){
+  if(!deck.length) return;
+  const pool=[]; deck.forEach(i=>{const w=6-(boxes[i]||0);for(let k=0;k<w;k++)pool.push(i);});
+  let pick,g=0; do{ pick=pool[Math.floor(Math.random()*pool.length)]; g++; }while(pick===lastIdx&&deck.length>1&&g<40);
+  curIdx=pick; lastIdx=pick; renderCard();
+}
+let studyAnswered=false, studyOptsCache=[], hintUsed=false, studyMissed=false;
+function unitSig(ans){
+  const a=" "+ans.toLowerCase()+" ", s=[];
+  if(/km\/h/.test(a))s.push("kmh");
+  if(/g\/l/.test(a))s.push("gl");
+  if(/\bmm\b|milímetro/.test(a))s.push("mm");
+  if(/\bcm\b|centímetro/.test(a))s.push("cm");
+  if(/metro|\bm\.|\bm\b/.test(a))s.push("metro");
+  if(/%/.test(a))s.push("pct");
+  if(/año/.test(a))s.push("anio");
+  if(/minuto/.test(a))s.push("min");
+  if(/hora/.test(a))s.push("hora");
+  if(/segundo/.test(a))s.push("seg");
+  if(/\bveces\b|\bvez\b/.test(a))s.push("veces");
+  if(/piso/.test(a))s.push("piso");
+  if(/\b(19|20)\d\d\b/.test(a))s.push("year");
+  return s;
+}
+function shareSig(a,b){ const sb=unitSig(b); return unitSig(a).some(x=>sb.indexOf(x)>=0); }
+function buildOptions(idx){
+  if(CARDS[idx].o) return shuffle(CARDS[idx].o.slice());
+  const correct=CARDS[idx].a, cat=CARDS[idx].c;
+  let sibs=CARDS.filter((c,i)=>i!==idx&&c.c===cat).map(c=>c.a);
+  sibs=Array.from(new Set(sibs)).filter(a=>a!==correct);
+  const byLen=arr=>arr.sort((x,y)=>Math.abs(x.length-correct.length)-Math.abs(y.length-correct.length));
+  let pick=byLen(sibs.filter(a=>shareSig(a,correct))).concat(byLen(sibs.filter(a=>!shareSig(a,correct))));
+  if(pick.length<2){
+    let extra=Array.from(new Set(CARDS.map(c=>c.a))).filter(a=>a!==correct&&pick.indexOf(a)<0);
+    pick=pick.concat(byLen(extra));
+  }
+  return shuffle([correct,pick[0],pick[1]].filter(Boolean));
+}
+function renderCard(){
+  const c=CARDS[curIdx];
+  studyAnswered=false;
+  const pill=document.getElementById("pill"); pill.className="pill d"+c.d; pill.textContent=DIFF[c.d].n;
+  const fc=document.getElementById("fcat"); fc.textContent=CATS[c.c].i+" "+CATS[c.c].n; fc.style.background=CATS[c.c].c;
+  const bx=boxes[curIdx]||0;
+  document.getElementById("boxtag").textContent=bx>=4?"✓ dominada":(bx===0?"nueva":"caja "+bx);
+  document.getElementById("studyResultTag").textContent="";
+  document.getElementById("studyQ").textContent=c.q;
+  studyOptsCache=buildOptions(curIdx);
+  const letters=["A","B","C","D","E","F"], box=document.getElementById("studyOpts"); box.innerHTML="";
+  studyOptsCache.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="opt"; b.innerHTML=`<span class="lt">${letters[k]}</span><span></span>`;
+    b.querySelector("span:last-child").textContent=opt;
+    b.onclick=()=>answerStudy(b,opt);
+    box.appendChild(b);
+  });
+  document.getElementById("studyNext").textContent="Saltar →";
+  hintUsed=false; studyMissed=false;
+  document.getElementById("revealBtn").style.display="none";
+  document.getElementById("hintBtn").style.display=(studyDiff==="1")?"block":"none";
+}
+function answerStudy(el,opt){
+  if(studyAnswered)return;
+  const correct=CARDS[curIdx].a;
+  const tag=document.getElementById("studyResultTag");
+  if(opt===correct){
+    studyAnswered=true;
+    document.querySelectorAll("#studyOpts .opt").forEach(o=>o.classList.add("lock"));
+    el.classList.add("correct");
+    tag.textContent=studyMissed?"✓ ¡Correcto! (con reintentos)":"✓ ¡Correcto!"; tag.style.color="var(--green)";
+    if(!studyMissed) boxes[curIdx]=Math.min(5,(boxes[curIdx]||0)+1);
+    store.save("clb_boxes",boxes); refreshHome();
+    const bx=boxes[curIdx]||0; document.getElementById("boxtag").textContent=bx>=4?"✓ dominada":(bx===0?"nueva":"caja "+bx);
+    document.getElementById("hintBtn").style.display="none";
+    document.getElementById("revealBtn").style.display="none";
+    document.getElementById("studyNext").textContent="Siguiente →";
+  }else{
+    studyMissed=true;
+    el.classList.add("wrong","tried");
+    tag.textContent="✗ Incorrecto — elige otra"; tag.style.color="var(--red)";
+    boxes[curIdx]=1; store.save("clb_boxes",boxes); refreshHome();
+    document.getElementById("boxtag").textContent="caja 1";
+    document.getElementById("hintBtn").style.display="none";
+    document.getElementById("revealBtn").style.display="block";
+  }
+}
+function useHint(){
+  if(studyAnswered||hintUsed)return;
+  const correct=CARDS[curIdx].a;
+  const wrongs=Array.from(document.querySelectorAll("#studyOpts .opt")).filter(o=>
+    o.querySelector("span:last-child").textContent!==correct && !o.classList.contains("elim") && !o.classList.contains("tried"));
+  if(wrongs.length>1){ // dejar siempre al menos una incorrecta visible
+    const pick=wrongs[Math.floor(Math.random()*wrongs.length)];
+    pick.classList.add("elim");
+    hintUsed=true;
+    document.getElementById("hintBtn").style.display="none";
+    const tag=document.getElementById("studyResultTag"); tag.textContent="💡 Descarté una opción incorrecta"; tag.style.color="var(--amber)";
+  }
+}
+function revealAnswer(){
+  studyAnswered=true;
+  const correct=CARDS[curIdx].a;
+  document.querySelectorAll("#studyOpts .opt").forEach(o=>{ o.classList.add("lock"); if(o.querySelector("span:last-child").textContent===correct)o.classList.add("correct"); });
+  const tag=document.getElementById("studyResultTag"); tag.textContent="Respuesta correcta (en verde) ✓"; tag.style.color="var(--green)";
+  document.getElementById("revealBtn").style.display="none";
+  document.getElementById("hintBtn").style.display="none";
+  document.getElementById("studyNext").textContent="Siguiente →";
+}
+function nextStudy(){ stopAudio(); pickNext(); }
+
+/* ===================== AUDIO ===================== */
+let audioOn=false, voice=null;
+function loadVoice(){ const vs=window.speechSynthesis?speechSynthesis.getVoices():[]; voice=vs.find(v=>/es[-_]?CL/i.test(v.lang))||vs.find(v=>/es[-_]?MX/i.test(v.lang))||vs.find(v=>/^es/i.test(v.lang))||null; }
+if(window.speechSynthesis){ loadVoice(); speechSynthesis.onvoiceschanged=loadVoice; }
+function say(text){ return new Promise(res=>{ if(!window.speechSynthesis){res();return;} const u=new SpeechSynthesisUtterance(text); u.lang="es-CL"; if(voice)u.voice=voice; u.rate=0.96; u.onend=res; u.onerror=res; speechSynthesis.speak(u); }); }
+function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function readAloud(e){
+  if(e)e.stopPropagation();
+  if(!window.speechSynthesis)return;
+  speechSynthesis.cancel();
+  const c=CARDS[curIdx], letters=["A","B","C","D","E","F"];
+  (async()=>{
+    await say("Pregunta. "+c.q); if(!window.speechSynthesis)return;
+    for(let k=0;k<studyOptsCache.length;k++){ await wait(180); await say("Opción "+letters[k]+". "+studyOptsCache[k]); if(!window.speechSynthesis)return; }
+  })();
+}
+async function audioLoop(){
+  while(audioOn){
+    const c=CARDS[curIdx];
+    document.getElementById("studyResultTag").textContent="";
+    await say("Pregunta. "+c.q); if(!audioOn)break; await wait(1700); if(!audioOn)break;
+    if(!studyAnswered){
+      studyAnswered=true;
+      document.querySelectorAll("#studyOpts .opt").forEach(o=>{ o.classList.add("lock"); if(o.querySelector("span:last-child").textContent===c.a)o.classList.add("correct"); });
+      const tag=document.getElementById("studyResultTag"); tag.textContent="Respuesta correcta ✓"; tag.style.color="var(--green)";
+      document.getElementById("studyNext").textContent="Siguiente →";
+    }
+    await say("Respuesta correcta. "+c.a); if(!audioOn)break; await wait(2200); if(!audioOn)break;
+    pickNext(); await wait(350);
+  }
+}
+function toggleAudio(e){
+  if(e)e.stopPropagation();
+  audioOn=!audioOn;
+  const b=document.getElementById("audioBtn");
+  if(audioOn){ b.classList.add("on"); b.textContent="⏸ Pausar"; audioLoop(); } else stopAudio();
+}
+function stopAudio(){
+  audioOn=false;
+  if(window.speechSynthesis)speechSynthesis.cancel();
+  const b=document.getElementById("audioBtn");
+  if(b){ b.classList.remove("on"); b.textContent="🔊 Modo audio (automático)"; }
+}
+
+/* ===================== EXAMEN ===================== */
+let examDiff="all", examLen=20, exam=[], exIdx=0, exScore=0, exWrong=[], exAnswered=false, examHintUsed=false;
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function examItems(){
+  const a=QUIZ.map(x=>({q:x.q,c:x.c,d:x.d,o:x.o,correct:x.o[0]}));
+  const b=CARDS.filter(c=>c.o).map(c=>({q:c.q,c:c.c,d:c.d,o:c.o,correct:c.a}));
+  return a.concat(b);
+}
+function examPool(diff){
+  const all=examItems();
+  if(diff==="1") return all.filter(q=>q.d===1);
+  if(diff==="2") return all.filter(q=>q.d===2);
+  if(diff==="3") return all.filter(q=>q.d>=2); // difícil = medio + oficiales
+  return all;
+}
+function renderExamChips(){
+  let d=`<button class="chip ${examDiff==='all'?'on':''}" onclick="setExamDiff('all')">Mixto</button>`;
+  for(const x of [1,2,3]) d+=`<button class="chip d${x} ${examDiff==String(x)?'on':''}" onclick="setExamDiff('${x}')">${DIFF[x].n}</button>`;
+  document.getElementById("examDiffChips").innerHTML=d;
+  let l=""; for(const n of [10,20,35]) l+=`<button class="chip ${examLen===n?'on':''}" onclick="setExamLen(${n})">${n}</button>`;
+  document.getElementById("examLenChips").innerHTML=l;
+}
+function setExamDiff(d){ examDiff=d; renderExamChips(); }
+function setExamLen(n){ examLen=n; renderExamChips(); }
+function showExamConfig(){
+  document.getElementById("examRun").style.display="none";
+  document.getElementById("examResult").style.display="none";
+  document.getElementById("examConfig").style.display="block";
+  renderExamChips(); renderHistory();
+}
+function quickExam(){ examDiff="all"; examLen=20; go('exam'); startExam(); }
+function startExam(){
+  stopAudio();
+  let pool=examPool(examDiff);
+  const n=Math.min(examLen,pool.length);
+  exam=shuffle(pool).slice(0,n).map(q=>({q:q.q,c:q.c,d:q.d,opts:shuffle(q.o),correct:q.correct}));
+  exIdx=0; exScore=0; exWrong=[];
+  document.getElementById("examConfig").style.display="none";
+  document.getElementById("examResult").style.display="none";
+  document.getElementById("examRun").style.display="block";
+  document.querySelector("main").scrollTop=0;
+  renderExam();
+}
+function renderExam(){
+  exAnswered=false;
+  if(window.speechSynthesis)speechSynthesis.cancel();
+  const it=exam[exIdx], L=exam.length, letters=["A","B","C","D","E","F"];
+  document.getElementById("qNum").textContent=`Pregunta ${exIdx+1}/${L}`;
+  document.getElementById("qScore").textContent=`${exScore} ✓ · ${exWrong.length} ✗`;
+  document.getElementById("qBar").style.width=(exIdx/L*100)+"%";
+  document.getElementById("examQ").textContent=it.q;
+  const box=document.getElementById("examOpts"); box.innerHTML="";
+  it.opts.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="opt";
+    b.innerHTML=`<span class="lt">${letters[k]}</span><span>${opt}</span>`;
+    b.onclick=()=>answerExam(b,opt,it);
+    box.appendChild(b);
+  });
+  document.getElementById("nextBtn").style.display="none";
+  examHintUsed=false;
+  const ehb=document.getElementById("examHintBtn"); ehb.style.display="block"; ehb.style.opacity="1"; ehb.style.pointerEvents="auto";
+}
+function answerExam(el,opt,it){
+  if(exAnswered)return; exAnswered=true;
+  document.querySelectorAll("#examOpts .opt").forEach(o=>o.classList.add("lock"));
+  {const ehb=document.getElementById("examHintBtn"); ehb.style.opacity=".5"; ehb.style.pointerEvents="none";}
+  if(opt===it.correct){ exScore++; el.classList.add("correct"); }
+  else{ el.classList.add("wrong"); exWrong.push({q:it.q,correct:it.correct});
+    document.querySelectorAll("#examOpts .opt").forEach(o=>{ if(o.querySelector("span:last-child").textContent===it.correct)o.classList.add("correct"); }); }
+  document.getElementById("qScore").textContent=`${exScore} ✓ · ${exWrong.length} ✗`;
+  const nb=document.getElementById("nextBtn");
+  nb.style.display="block"; nb.textContent=exIdx<exam.length-1?"Siguiente":"Ver resultado";
+}
+function nextExam(){ if(exIdx<exam.length-1){ exIdx++; renderExam(); document.querySelector("main").scrollTop=0; } else finishExam(); }
+function readExam(e){
+  if(e)e.stopPropagation();
+  if(!window.speechSynthesis)return; speechSynthesis.cancel();
+  const it=exam[exIdx], letters=["A","B","C","D","E","F"];
+  (async()=>{
+    await say("Pregunta. "+it.q); if(!window.speechSynthesis)return;
+    for(let k=0;k<it.opts.length;k++){ await wait(180); await say("Opción "+letters[k]+". "+it.opts[k]); if(!window.speechSynthesis)return; }
+  })();
+}
+function useExamHint(){
+  if(exAnswered||examHintUsed)return;
+  const it=exam[exIdx];
+  const wrongs=Array.from(document.querySelectorAll("#examOpts .opt")).filter(o=>
+    o.querySelector("span:last-child").textContent!==it.correct && !o.classList.contains("elim"));
+  if(wrongs.length>1){
+    wrongs[Math.floor(Math.random()*wrongs.length)].classList.add("elim");
+    examHintUsed=true;
+    const b=document.getElementById("examHintBtn"); b.style.opacity=".5"; b.style.pointerEvents="none";
+  }
+}
+function finishExam(){
+  const L=exam.length, pct=Math.round(exScore/L*100);
+  const diffLabel = examDiff==="all"?"Mixto":DIFF[examDiff].n;
+  const d=new Date();
+  const dateStr=d.toLocaleDateString("es-CL",{day:"2-digit",month:"short"})+" · "+d.toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+  history.unshift({ts:Date.now(),date:dateStr,diff:diffLabel,total:L,score:exScore,pct:pct,wrong:exWrong});
+  if(history.length>50)history=history.slice(0,50);
+  store.save("clb_history",history);
+  refreshHome();
+  // pantalla resultado
+  document.getElementById("examRun").style.display="none";
+  document.getElementById("examResult").style.display="block";
+  document.getElementById("resScore").textContent=exScore;
+  document.getElementById("resTotal").textContent="/"+L;
+  const v=document.getElementById("resVerdict"), m=document.getElementById("resMsg");
+  let color;
+  if(pct>=90){ v.textContent="¡Excelente! Vas listo 🚀"; color="var(--green)"; m.textContent="Nivel de aprobar. Repasa solo lo que falló."; }
+  else if(pct>=75){ v.textContent="Bien, afina detalles"; color="var(--amber)"; m.textContent="Te falta poco. Revisa los errores y vuelve a las tarjetas."; }
+  else { v.textContent="A seguir estudiando 💪"; color="var(--red)"; m.textContent="Enfócate en las categorías que más fallaste."; }
+  v.style.color=color; document.getElementById("resScore").style.color=color;
+  const rp=document.getElementById("resReviewPanel");
+  if(!exWrong.length){ rp.innerHTML=`<div style="text-align:center;color:var(--green);font-weight:700;padding:6px">¡Sin errores! 🎉</div>`; }
+  else{
+    rp.innerHTML=`<div class="lbl" style="margin-top:0">Para repasar (${exWrong.length})</div>`+
+      exWrong.map(w=>`<div class="ritem"><div class="rq">${w.q}</div><div class="ra">Correcta: <b>${w.correct}</b></div></div>`).join("");
+  }
+  document.querySelector("main").scrollTop=0;
+}
+
+/* ===================== HISTORIAL ===================== */
+function renderHistory(){
+  const box=document.getElementById("historyList");
+  if(!history.length){ box.innerHTML=`<div class="empty">Aún no rindes exámenes.<br>¡Comienza uno arriba! 👆</div>`; return; }
+  box.innerHTML=history.map((h,i)=>{
+    const col=h.pct>=90?"var(--green)":(h.pct>=75?"var(--amber)":"var(--red)");
+    const rev=h.wrong&&h.wrong.length?
+      `<div class="lbl" style="margin-top:10px">Falladas (${h.wrong.length})</div>`+
+      h.wrong.map(w=>`<div class="ritem"><div class="rq">${w.q}</div><div class="ra">Correcta: <b>${w.correct}</b></div></div>`).join("")
+      :`<div style="padding:10px 0;color:var(--green);font-weight:700;font-size:14px">¡Sin errores! 🎉</div>`;
+    return `<div class="hrow" id="hr${i}">
+      <div class="hhead" onclick="toggleHist(${i})">
+        <div class="hbadge" style="background:${col}">${h.pct}<small>%</small></div>
+        <div class="hmid"><div class="hd">${h.score}/${h.total} correctas <span style="color:var(--red)">· ${h.total-h.score} ✗</span></div><div class="hm">${h.date} · ${h.diff}</div></div>
+        <div class="hchev">▶</div>
+      </div>
+      <div class="hbody">${rev}</div></div>`;
+  }).join("")+`<button class="link" onclick="clearHistory()">Borrar historial</button>`;
+}
+function toggleHist(i){ document.getElementById("hr"+i).classList.toggle("open"); }
+async function clearHistory(){ if(!confirm("¿Borrar todo el historial de exámenes?"))return; history=[]; await store.save("clb_history",history); refreshHome(); renderHistory(); }
+
+/* ===================== APUNTES ===================== */
+function renderTrucos(){
+  document.getElementById("trucoList").innerHTML=TRUCOS.map((t,i)=>
+    `<div class="truco"><h3>${t.i} ${t.t}<button class="rd" onclick="readTruco(${i})">🔈</button></h3><p>${t.h}</p></div>`).join("");
+}
+function readTruco(i){
+  if(!window.speechSynthesis)return; speechSynthesis.cancel();
+  const tmp=document.createElement("div"); tmp.innerHTML=TRUCOS[i].h;
+  say(TRUCOS[i].t+". "+tmp.textContent);
+}
+
+/* ===================== PWA INSTALL ===================== */
+let deferredPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); deferredPrompt=e;
+  document.getElementById("installCard").style.display="block";
+  document.getElementById("installAndroid").style.display="block";
+  document.getElementById("installIos").style.display="none";
+});
+function doInstall(){ if(!deferredPrompt)return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(()=>{ deferredPrompt=null; document.getElementById("installCard").style.display="none"; }); }
+function isStandalone(){ return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone===true; }
+function setupInstallHint(){
+  if(isStandalone())return;
+  const ua=navigator.userAgent||"";
+  const iOS=/iPhone|iPad|iPod/i.test(ua);
+  if(iOS){ document.getElementById("installCard").style.display="block";
+    document.getElementById("installAndroid").style.display="none";
+    document.getElementById("installIos").style.display="block"; }
+}
+if("serviceWorker" in navigator){ window.addEventListener("load",()=>{ navigator.serviceWorker.register("sw.js").catch(()=>{}); }); }
+
+/* ===================== STREAK ===================== */
+function dayKey(d){ return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(); }
+function bumpStreak(){
+  const today=dayKey(new Date());
+  const yest=dayKey(new Date(Date.now()-864e5));
+  if(streak.last===today){ /* ya contado */ }
+  else if(streak.last===yest){ streak.count=(streak.count||0)+1; streak.last=today; }
+  else { streak.count=1; streak.last=today; }
+  store.save("clb_streak",streak);
+}
+
+/* ===================== INIT ===================== */
+(async function(){
+  store.init();
+  boxes=await store.load("clb_boxes",{})||{};
+  history=await store.load("clb_history",[])||[];
+  streak=await store.load("clb_streak",{last:null,count:0})||{last:null,count:0};
+  bumpStreak();
+  renderStudyChips(); renderCatList(); renderTrucos(); renderExamChips(); renderHistory(); refreshHome();
+  setupInstallHint();
+})();
+</script>
+</body>
+</html>
